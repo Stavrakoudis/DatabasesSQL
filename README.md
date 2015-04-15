@@ -24,5 +24,5 @@
 Σε μερικές περιπτώσεις ισχύουν [επιπλέον περιορισμοί]
 (http://stavrakoudis.econ.uoi.gr/stavrakoudis/?iid=401).
 
-Αθανάσιος Σταυρακούδης
-http://stavrakoudis.econ.uoi.gr
+[Αθανάσιος Σταυρακούδης]
+(http://stavrakoudis.econ.uoi.gr)
