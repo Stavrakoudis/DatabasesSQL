@@ -5,15 +5,13 @@
 (http://stavrakoudis.econ.uoi.gr/stavrakoudis/?menu=bookSQL Βάσεις Δεδομένων και SQL: μια πρακτική προσέγγιση)
 
 
-[logo]: (http://stavrakoudis.econ.uoi.gr/stavrakoudis/Stavrakoudis-SQL.gif "Βάσεις Δεδομένων και SQL: μια πρακτική προσέγγιση")
-
-Μεγάλο μέρος του βιβλίου χρησιμοποιείται στομάθημα
+Μεγάλο μέρος του βιβλίου χρησιμοποιείται στο μάθημα
 Διαχείριση Δεδομένων και Βάσεις Δεδομένων
 του τμήματος Οικονομικών Επιστημών του παν/μίου Ιωαννίνων
 [Διαχείριση Δεδομένων και Βάσεις Δεδομένων]
 (http://stavrakoudis.econ.uoi.gr/stavrakoudis/?iid=100)
 
-Μπορείτε να παρακολουθλησετε βιντεοδιαλέξεις του βιβλίου/μαθήματος:
+Μπορείτε να παρακολουθήσετε βιντεοδιαλέξεις του βιβλίου/μαθήματος:
 * http://stavrakoudis.econ.uoi.gr/stavrakoudis/?iid=108 
 * http://delos.uoi.gr/opendelos/search?crs=e3b8c0da
 
