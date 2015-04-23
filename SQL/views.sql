@@ -48,6 +48,7 @@ CREATE VIEW dep2a AS
 INSERT INTO dep2a (id, lastname, firstname, depid, hiredate)
      VALUES (1002, 'Ευθυμίου', 'Ευαγγελία', 2, '2006-09-15');
 */
+
 DROP VIEW IF EXISTS newsal;
 CREATE VIEW newsal (empid, salary, newsal) AS
   SELECT empid, salary, salary*1.1
@@ -95,7 +96,7 @@ ORDER BY d.depid ASC;
 DROP VIEW IF EXISTS empsperdep;
 CREATE VIEW empsperdep AS
   SELECT d.depname, COUNT(*) AS  cnt
-   FROM departments d INNER JOIN employees e ON d.depid = e.depid
+    FROM departments d INNER JOIN employees e ON d.depid = e.depid
 GROUP BY d.depname
 ORDER BY d.depid;
 
@@ -113,15 +114,15 @@ CREATE VIEW newsal10(id, sal, nsal) AS
 
 DROP VIEW IF EXISTS maxsal;
 CREATE VIEW maxsal AS
-  SELECT d.depname, MAX(salary) AS  MaxSal
+   SELECT d.depname, MAX(salary) AS  MaxSal
    FROM departments d INNER JOIN employees e ON d.depid = e.depid
 GROUP BY d.depname
 ORDER BY d.depid;
 
 DROP VIEW IF EXISTS depprocnt;
 CREATE VIEW depprocnt AS
-SELECT d.depname, p.title, COUNT(*) AS cnt
-  FROM departments d INNER JOIN employees e ON d.depid = e.depid
+  SELECT d.depname, p.title, COUNT(*) AS cnt
+    FROM departments d INNER JOIN employees e ON d.depid = e.depid
                      INNER JOIN workson w   ON e.empid = w.empid
                      INNER JOIN projects p  ON w.proid = p.proid
 GROUP BY d.depname, p.title;
