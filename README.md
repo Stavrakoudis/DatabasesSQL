@@ -2,7 +2,7 @@
 
 Παραδείγματα, παρουσιάσεις, ασκήσεις κ.λπ. από από το βιβλίο 
 [Βάσεις Δεδομένων και SQL: μια πρακτική προσέγγιση]
-(http://stavrakoudis.econ.uoi.gr/stavrakoudis/?menu=bookSQL Βάσεις Δεδομένων και SQL: μια πρακτική προσέγγιση)
+(http://stavrakoudis.econ.uoi.gr/stavrakoudis/?menu=bookSQL)
 
 
 Μεγάλο μέρος του βιβλίου χρησιμοποιείται στο μάθημα

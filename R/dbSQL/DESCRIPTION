@@ -1,0 +1,9 @@
+Package: dbSQL
+Type: Package
+Title: What the package does (short line)
+Version: 1.0
+Date: 2015-04-22
+Author: Athanassios Stavrakoudis
+Maintainer: Who to complain to <astavrak@uoi.gr>
+Description: Παραδείγματα από τη βάση company
+License: http://creativecommons.org/licenses/by-nc/4.0/
