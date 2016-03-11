@@ -11,7 +11,7 @@
 * http://delos.uoi.gr/opendelos/videolecture/show?rid=2eb8e218
 
 Το υλικό διανέμεται με την άδεια [«Creative Commons»]
-(http://creativecommons.org/licenses/by-nc-sa/4.0/gr/).
+(http://creativecommons.org/licenses/by-nc-sa/4.0/).
 Σε μερικές περιπτώσεις ισχύουν [επιπλέον περιορισμοί]
 (http://stavrakoudis.econ.uoi.gr/stavrakoudis/?iid=401).
 
