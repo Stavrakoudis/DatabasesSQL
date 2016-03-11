@@ -4,7 +4,7 @@
 * Ερωτήματα επιλογής με σύζευξη πινάκων
 από το βιβλίο
 [Βάσεις Δεδομένων και SQL: μια πρακτική προσέγγιση]
-(http://stavrakoudis.econ.uoi.gr/stavrakoudis/?menu=bookSQL Βάσεις Δεδομένων και SQL: μια πρακτική προσέγγιση)
+(http://stavrakoudis.econ.uoi.gr/stavrakoudis/?menu=bookSQL)
 
 Μπορείτε να παρακολουθήσετε τη σχετική βιντεοδιάλεξη του κεφαλαίου εδώ:
 * http://stavrakoudis.econ.uoi.gr/stavrakoudis/?iid=119
