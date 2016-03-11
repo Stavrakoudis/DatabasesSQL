@@ -1,0 +1,359 @@
+\section[]{\textgreek{Εσωτερική σύζευξη πινάκων στην \textlatin{SQL}}}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Εσωτερική σύζευξη στην {\en SQL}}
+\begin{minipage}{0.92\textwidth}
+\begin{exampleblock}{Σύζευξη τμημάτων και υπαλλήλων}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments INNER JOIN employees
+         ON departments.depid = employees.depid;
+\end{SQL}
+\el
+\end{exampleblock}
+\pause
+\begin{enumerate}[<+->] \pause \itemsep 6pt
+  \item Οι δύο πίνακες ενώνονται με τον όρο {\sq INNER JOIN}.
+  \item Αντί για {\sq WHERE} υπάρχει ({\bb \el υποχρεωτικά}) μετά το {\sq INNER JOIN}
+        η φράση {\sq ON}.
+  \item Το πεδίο σύζευξης (εδώ το {\ra depid}) υπάρχει δύο φορές στο αποτέλεσμα.  
+  \item Το πεδίο σύζευξης μπορεί να έχει διαφορετικό όνομα στους δύο πίνακες.       
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Ισοδυναμία εσωτερικής και θ σύζευξης στην {\en SQL}}
+\begin{minipage}{0.92\textwidth}
+\begin{block}{\small Σύζευξη τμημάτων και υπαλλήλων με εσωτερική σύζευξη}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments INNER JOIN employees
+         ON departments.depid = employees.depid;
+\end{SQL}
+\el
+\end{block}
+\begin{block}{\small Σύζευξη τμημάτων και υπαλλήλων με θ σύζευξη}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments JOIN employees
+   WHERE departments.depid = employees.depid;
+\end{SQL}
+\el
+\end{block}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Όχι στις υπερβολές}
+\begin{minipage}{\wE}
+\begin{alertblock}{\small Σύζευξη τμημάτων και υπαλλήλων με εσωτερική και θ σύζευξη}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments INNER JOIN employees
+         ON departments.depid = employees.depid
+   WHERE departments.depid = employees.depid;
+\end{SQL}
+\el
+\end{alertblock}
+\pause
+\begin{enumerate} \itemsep 6pt
+  \item Περιττό.
+  \item Δεν είναι συντακτικά λάθος, είναι όμως εννοιολογικά μπερδεμένο.
+  \item Μία φορά αρκεί, η πολυλογία φέρνει λάθη. 
+  \item Δυσκολία συντήρησης του κώδικα.
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Μετονομασία πινάκων}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{block}{Με χρήση του {\en AS}}
+\en
+\begin{SQL}
+    FROM employees AS e
+\end{SQL}
+\el
+\end{block}
+\vspace*{-0.4cm}
+\begin{block}{Χωρίς χρήση του {\en AS}}
+\en
+\begin{SQL}
+    FROM employees e
+\end{SQL}
+\el
+\end{block}
+\pause
+\vspace*{-0.4cm}
+\begin{block}{Στη σύζευξη}
+\en
+\begin{SQL}
+    FROM departments d INNER JOIN employees e
+\end{SQL}
+\el
+\end{block}
+\pause
+\begin{block}{Στο ερώτημα}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments d INNER JOIN employees e;   
+\end{SQL}
+\el
+\end{block}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα  {\en INNER JOIN} -- 1}
+\vspace*{-0.5cm}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να δοθεί το επώνυμο των υπαλλήλων και το όνομα του τμήματος στο
+              οποίο εργάζονται}
+\en
+\[
+\begin{split}
+  \Pi_{firstname, lastname, depname} \\ ( departments \bowtie_{departments.depid=employees.depid} employees)
+\end{split}
+\]
+\pause
+\vspace*{-0.5cm}
+\en
+\begin{SQL}
+  SELECT employees.lastname, departments.depname
+    FROM departments INNER JOIN employees
+         ON employees.depid = departments.depid;
+\end{SQL}
+\end{exampleblock}
+\el
+\begin{itemize}
+  \item Η σύζευξη γίνεται με βάση το κοινό του πεδίο {\ra depid}.
+  \item Η σύζευξη με βάση {\crr πρωτεύον} και {\crr ξένο} κλειδί  
+        είναι η πλέον συνηθισμένη περίπτωση σύζευξης.
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα  {\en INNER JOIN} -- 2}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{exampleblock}{\small Να δοθεί το όνομα των υπαλλήλων, το όνομα του τμήματος στο
+              οποίο εργάζονται, και ο μισθός τους}
+\en
+\[
+\begin{array}{l}
+  \Pi_{firstname, lastname, depname, salary}  \\
+  ( \varrho_{d} (departments) \bowtie_{d.depid=e.depid} \varrho_{e} (employees) )
+\end{array}
+\]
+\pause
+\vspace*{-0.5cm}
+\en
+\begin{SQL}
+  SELECT e.firstname, e.lastname, d.depname, e.salary
+    FROM employees e INNER JOIN departments d
+         ON e.depid = d.depid;
+\end{SQL}
+\end{exampleblock}
+\el
+\footnotesize
+\begin{tabular}{l l l r} \hline
+{\bb\en firstname} & {\bb\en lastname} & {\bb\en depname} & {\bb\en salary} \\ \hline
+Μαρία & Αθανασίου & Διοίκησης/Επίβλεψης & 2787.69 \\
+Κρινιώ & Μαροπούλου & Διοίκησης/Επίβλεψης & 1754.67 \\
+Κυριάκος & Ρούσσης & Διοίκησης/Επίβλεψης & 1852.99 \\
+Μαρία & Αλεβιζάτου & Οικονομoλόγων/Λογιστών & 1321.92 \\
+Δέσποινα & Παπαδοπούλου & Οικονομoλόγων/Λογιστών & 1609.52 \\
+Πέτρος & Αρβανιτάκης & Οικονομoλόγων/Λογιστών & 1323.80 \\
+ $\ldots$ & $\ldots$ & $\ldots$ & $\ldots$  \\  \hline
+\end{tabular}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα  {\en INNER JOIN} -- 3}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{exampleblock}{\small Να δοθεί το όνομα των υπαλλήλων, το όνομα του τμήματος στο
+              οποίο εργάζονται και ο μισθός τους, για υπαλλήλους με μισθό
+              μεταξύ 1050 και 1300 \euro}
+\en
+\[
+\begin{array}{l}
+  \Pi_{firstname, lastname, depname, salary}
+  (\sigma_{salary\geq1050 \wedge salary\leq1300} \\
+  ( \varrho_{d} (departments) \bowtie_{d.depid=e.depid} \varrho_{e} (employees) ) )
+\end{array}
+\]
+\pause
+\vspace*{-0.5cm}
+\en
+\begin{SQL}
+  SELECT e.firstname, e.lastname, d.depname, e.salary
+    FROM employees e INNER JOIN departments d
+         ON e.depid = d.depid
+   WHERE e.salary BETWEEN 1050 AND 1300;
+\end{SQL}
+\end{exampleblock}
+\el
+\begin{itemize}
+  \item Ο όρος {\sq WHERE} μπορεί να χρησιμοποιηθεί  για περιορισμό  των εγγραφών.
+  \item Η παράσταση συνθήκης μπορεί να αφορά οποιοδήποτε   πεδίο
+        από αυτά που υπάρχουν στους δύο πίνακες.
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα  {\en INNER JOIN} -- 4}
+
+\vspace*{-0.5cm}
+\begin{exampleblock}{\small Κωδικός και όνομα όλων των υπαλλήλων
+             που συμμετέχουν στο έργο με κωδικό 38,
+             με αύξουσα ταξινόμηση ως προς το επώνυμο}
+\en
+\vspace*{-0.5cm}
+\[
+  \Pi_{empid, firstname, lastname}
+  (\sigma_{proid = 38}
+    ( \varrho_{e} (employees) \bowtie_{e.empid=w.empid} \varrho_{w} (workson) )
+  )
+\]
+\pause
+\vspace*{-0.6cm}
+\en
+\begin{SQL}
+  SELECT e.empid, e.firstname, e.lastname
+    FROM employees e INNER JOIN workson w
+         ON e.empid = w.empid
+   WHERE w.proid = 38
+ORDER BY e.lastname ASC;
+\end{SQL}
+\end{exampleblock}
+\el
+\begin{minipage}{\wE}
+\begin{itemize}
+  \item Ο όρος {\sq ORDER BY} πάντα στο τέλος.
+  \item Προσέξτε πως χρειάζεται {\bb σύζευξη} ακόμα και αν όλα τα πεδία
+        που εμφανίζονται μετά τον όρο {\sq SELECT} βρίσκονται σε ένα πίνακα.
+  \item Ξαναγράψτε την απάντηση με υποερώτημα (παρακάτω μάθημα).      
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Πολλά προς πολλά}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να βρεθούν τα ονόματα των υπαλλήλων και ο κωδικός και ο προϋπολογισμός των
+              έργων στα οποία συμμετέχουν  υπάλληλοι με μισθό μεγαλύτερο από \euro1700 }
+\en
+\vspace{-0.5cm}
+\[
+\begin{array}{l}
+  \Pi_{firstname, lastname, proid, budget}
+  (\sigma_{salary>1700}                    \\
+    ( \varrho_{e} (employees) \bowtie_{d.depid=e.depid} \varrho_{w} (workson)
+      \bowtie_{w.proid=p.proid} \varrho_{p} (projects)   )
+  )
+\end{array}
+\]
+\pause
+\vspace{-0.5cm}
+\en
+\begin{SQL}
+  SELECT e.firstname, e.lastname, p.proid, p.budget
+    FROM (employees e INNER JOIN workson w
+         ON e.empid = w.empid)
+                      INNER JOIN projects p
+         ON p.proid = w.proid
+   WHERE e.salary > 1700;
+\end{SQL}
+\el
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Πολλά προς πολλά -- Εναλλακτικός τρόπος}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να βρεθούν τα ονόματα των υπαλλήλων και ο κωδικός και ο προϋπολογισμός των
+              έργων στα οποία συμμετέχουν  υπάλληλοι με μισθό μεγαλύτερο του 1700\euro}
+\en
+\[
+\begin{array}{l}
+  \Pi_{firstname, lastname, proid, budget}
+  (\sigma_{e.empid = w.empid \wedge p.proid = w.proid \wedge e.salary>1700 }     \\
+    ( \varrho_{e} (employees) \times \varrho_{w} (workson)
+      \times \varrho_{p} (projects)   )
+  )
+\end{array}
+\]
+\begin{SQL}
+  SELECT e.firstname, e.lastname, p.proid, p.budget
+    FROM employees e, workson w, projects p
+   WHERE e.empid = w.empid
+     AND p.proid = w.proid
+     AND e.salary > 1700;
+\end{SQL}
+\el
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Ερώτημα με 4 πίνακες}
+\begin{minipage}{\wE}
+\vspace{-0.5cm}
+\begin{exampleblock}{\footnotesize Να βρεθεί το όνομα των υπαλλήλων και του τμήματος των υπαλλήλων
+             για όλους τους υπαλλήλους που προσλήφθηκαν μετά από την 1/1/2002 και
+             απασχολούνται σε έργα με βαθμό προόδου τουλάχιστον 20\%}
+\vspace{-0.5cm}             
+\en
+\[
+\begin{array}{l}
+ \Pi_{firstname, lastname, depname}
+ (\sigma_{hiredate>'2002-01-01' \wedge budget>100000} \\
+ ( \varrho_{d} (departments) \bowtie_{d.depid=e.depid}
+    \varrho_{e} (employees)  \\ \bowtie_{e.empid=w.empid} \varrho_{w} (workson)
+     \bowtie_{w.proid=p.proid} \varrho_{p} (projects)   )
+\end{array}
+\]
+\pause
+\vspace{-0.5cm}
+\en
+\begin{SQL}
+  SELECT DISTINCT e.firstname, e.lastname, d.depname
+    FROM ((departments d INNER JOIN employees e
+         ON d.depid = e.depid)
+                         INNER JOIN workson w
+         ON e.empid = w.empid)
+                         INNER JOIN projects p
+         ON p.proid = w.proid
+   WHERE e.hiredate > '2002-01-01'
+     AND p.progress > 20;
+\end{SQL}
+\el
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+

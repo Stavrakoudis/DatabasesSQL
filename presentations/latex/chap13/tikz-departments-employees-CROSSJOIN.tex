@@ -1,0 +1,51 @@
+\en
+\begin{tikzpicture}
+  \tikzstyle{every state} = [fill, draw=black, blue!50, text=black]
+  \tikzstyle{every state} = [inner sep=0.5pt, minimum size=0pt, scale=0.9]
+   
+  \def\A{0.0};
+  \def\B{4.0};
+
+  \draw (\A, 0) ellipse (22pt and 60pt); % A
+  \draw (\B, 0) ellipse (22pt and 60pt); % B
+
+  % A nodes
+  \node[state] (a1) at (\A,  50pt) {1};
+  \node[state] (a2) at (\A,  30pt) {2};
+  \node[state] (a3) at (\A,  10pt) {3};
+  \node[state] (a4) at (\A, -10pt) {4};
+  \node[state] (a5) at (\A, -30pt) {5};
+  \node[state] (a6) at (\A, -50pt) {6};
+  
+  % B nodes
+  \node[state] (b1) at (\B,  30pt) {102};
+  \node[state] (b2) at (\B,   0pt) {109};
+  \node[state] (b3) at (\B, -30pt) {153};
+  
+  % connection lines
+  \path[dashed] (a1) edge  (b1);
+  \path[dashed] (a2) edge  (b1);
+  \path[dashed] (a3) edge  (b1);
+  \path[dashed] (a4) edge  (b1);
+  \path[dashed] (a5) edge  (b1);
+  \path[red, thick] (a6) edge  (b1);
+  \path[red, thick] (a1) edge  (b2);
+  \path[dashed] (a2) edge  (b2);
+  \path[dashed] (a3) edge  (b2);
+  \path[dashed] (a4) edge  (b2);
+  \path[dashed] (a5) edge  (b2);
+  \path[dashed] (a6) edge  (b2);
+
+  \path[dashed] (a1) edge  (b3);
+  \path[red, thick] (a2) edge  (b3);
+  \path[dashed] (a3) edge  (b3);
+  \path[dashed] (a4) edge  (b3);
+  \path[dashed] (a5) edge  (b3);
+  \path[dashed] (a6) edge  (b3);
+
+  % annotate names
+  \draw (\A, 65pt) node {\large departments};
+  \draw (\B, 65pt) node {\large employees};
+
+\end{tikzpicture}
+\el

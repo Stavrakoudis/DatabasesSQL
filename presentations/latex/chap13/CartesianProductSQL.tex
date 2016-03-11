@@ -1,0 +1,440 @@
+\section[]{\textgreek{Καρτεσιανό γινόμενο και θ σύζευξη}}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Καρτεσιανό γινόμενο}
+\begin{minipage}{\wE}
+\begin{block}{Καρτεσιανό γινόμενο:}
+Ο συνδυασμός των πινάκων {\ra departments} και {\ra employees}
+\[
+departments \times employees
+\]
+λέγεται καρτεσιανό γινόμενο, και περιλαμβάνει όλους τους συνδυασμούς των
+εγγραφών των πινάκων {\ra departments} και {\ra employees}.
+\pause
+\begin{itemize}
+  \item Στο αποτέλεσμα περιλαμβάνονται όλα τα πεδία των πινάκων
+        {\ra departments} και {\ra employees}.
+  \item Οι εγγραφές του αποτελέσματος περιλαμβάνει όλους τους συνδυασμούς των εγγραφών
+        των πινάκων {\ra departments} και {\ra employees}.
+\end{itemize}  
+\end{block}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Καρτεσιανό γινόμενο $departments \times employees$}
+%\begin{minipage}{\wE}
+\begin{itemize}
+  \item Όλες οι δυνατές συνδέσεις ανάμεσα στα τμήματα και σε δείγμα 3 υπαλλήλων.
+  \item Μόνο οι {\crr κόκκινες γραμμές} αντιστοιχούν στην πραγματικότητα: \\ (1, 109), (6, 102), (2,153).
+  \item Τα καρτεσιανό γινόμενο απεικονίζει όλα τα {\bbl πιθανά ενδεχόμενα},
+        όχι απαραίτητα τα {\bbl πραγματικά γεγονότα}.
+\end{itemize}
+%\end{minipage}
+\input{tikz-departments-employees-CROSSJOIN.tex}
+\end{frame}
+
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Καρτεσιανό γινόμενο στην {\en SQL}}
+\begin{minipage}{\wE}
+\begin{exampleblock}{Καρτεσιανό γινόμενο τμημάτων και υπαλλήλων}
+\[ departments \times employees \]
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments, employees;
+\end{SQL}
+\el
+\end{exampleblock}
+\begin{itemize}
+  \item Η σύνταξη στην {\sq SQL} είναι απλή: γράφουμε τους πίνακες μετά τον όρο {\sq FROM}
+        και τους χωρίζουμε με κόμμα.
+  \item Μπορούμε να γράψουμε περισσότερο από δύο πίνακες.
+  \item Προσοχή! το αποτέλεσμα μπορεί να περιέχει μεγάλο όγκο εγγραφών,
+        πχ δύο πίνακες με 6 και 30 εγγραφές αντίστοιχα δίνουν στο αποτέλεσμα
+        $6\times30=180$ εγγραφές.
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Καρτεσιανό γινόμενο στην {\en SQL92, CROSS JOIN}}
+\begin{minipage}{\wE}
+\pause
+\begin{block}{Με χρήση του όρου {\en CROSS JOIN}}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments CROSS JOIN employees;
+\end{SQL}
+\el
+\end{block}
+\pause
+\begin{block}{Η απλά {\en JOIN}}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments JOIN employees;
+\end{SQL}
+\el
+\end{block}
+\pause
+\begin{itemize}
+  \item Οι δύο εκφράσεις είναι ισοδύναμες, θα επιστρέψουν το ίδιο αποτέλεσμα.
+  \item Προτιμούμε τον πρώτο τρόπο {\sq CROSS JOIN}, δηλώνει με πιο καθαρό τρόπο τη σύζευξη
+        με βάση το καρτεσιανό γινόμενο.
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Αποτέλεσμα καρτεσιανού γινομένου}
+\en
+\begin{SQL}
+  SELECT * 
+    FROM departments, employees;
+
+&scalebox{0.8}{depid  depname     manager  empid  firstname  lastname  depid  salary  hiredate} 
+&scalebox{0.8}{-------------------------------------------------------------------------------}
+&scalebox{0.8}{&mgr{    1  Διοίκ./Επιβ.    109     102  Νικηφόρος  Διαμαντίδης   6 1212.50 2003-06-02}}
+&scalebox{0.8}{&mgr{    2  Οικον./Λογ.     153     102  Νικηφόρος  Διαμαντίδης   6 1212.50 2003-06-02}}
+&scalebox{0.8}{&mgr{    3  Επιστημ./Μηχ.   431     102  Νικηφόρος  Διαμαντίδης   6 1212.50 2003-06-02}}
+&scalebox{0.8}{&mgr{    4  Εξωτ. συνερ.    230     102  Νικηφόρος  Διαμαντίδης   6 1212.50 2003-06-02}}
+&scalebox{0.8}{&mgr{    5  Γραμματείας     234     102  Νικηφόρος  Διαμαντίδης   6 1212.50 2003-06-02}}
+&scalebox{0.8}{&mgr{    6  Μάνατζ./Πωλ.    189     102  Νικηφόρος  Διαμαντίδης   6 1212.50 2003-06-02}}
+&scalebox{0.8}{&mgr{    1  Διοίκ./Επιβ.    109     109  Μαρία      Αθανασίου     1 2787.69 2000-01-26}}
+&scalebox{0.8}{&mgr{    2  Οικον./Λογ.     153     109  Μαρία      Αθανασίου     1 2787.69 2000-01-26}}
+&scalebox{0.8}{&mgr{    3  Επιστημ./Μηχ.   431     109  Μαρία      Αθανασίου     1 2787.69 2000-01-26}}
+&scalebox{0.8}{.............................................................................}
+180 rows in set (0.00 sec)
+\end{SQL}
+\el
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Επιλογή πεδίων από πίνακες}
+\begin{minipage}{\wE}
+\en
+\begin{SQL}
+  SELECT departments.depid, depname, empid, lastname 
+    FROM departments, employees;
+
+depid  depname       empid  lastname 
+---------------------------------------
+&mgr{    1  Διοίκ./Επιβ.    102   Διαμαντίδης}
+&mgr{    2  Οικον./Λογ.     153   Διαμαντίδης   }
+&mgr{    3  Επιστημ./Μηχ.   431   Διαμαντίδης   }
+&mgr{    4  Εξωτ. συνερ.    230   Διαμαντίδης   }
+&mgr{    5  Γραμματείας     234   Διαμαντίδης   }
+&mgr{    6  Μάνατζ./Πωλ.    189   Διαμαντίδης   }
+&mgr{    1  Διοίκ./Επιβ.    109   Αθανασίου     }
+&mgr{    2  Οικον./Λογ.     153   Αθανασίου     }
+&mgr{    3  Επιστημ./Μηχ.   431   Αθανασίου     }
+.........................................
+180 rows in set (0.00 sec)
+\end{SQL}
+\el
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Επιλογή πεδίων από πίνακες}
+\begin{minipage}{\wE}
+\en
+\begin{SQL}
+  SELECT departments.depid, depname, empid, lastname 
+    FROM departments, employees;
+\end{SQL}
+\el
+\begin{block}{Τι προσέχουμε:}
+\begin{enumerate}
+  \item Οποιοδήποτε όνομα πεδίου/στήλης υπάρχει στους πίνακες που ακολουθούν τον όρο {\sq FROM}
+        μπορούν να τοποθετηθούν μετά τον όρο {\sq SELECT}.
+  \item Σε περίπτωση που το όνομα πεδίου είναι μοναδικό σε όλους τους πίνακες 
+        μπορούμε να το γράψουμε ως έχει, πχ {\ra depname} ή {\ra lastname}.
+  \item Αν το ίδιο όνομα πεδίου υπάρχει σε δύο διαφορετικούς πίνακες,
+        τότε πρέπει να γραφεί με τη μορφή {\sq\el πίνακας.πεδίο}.
+\end{enumerate} 
+\end{block} 
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Μετονομασία πινάκων}
+\begin{minipage}{\wE}
+\begin{block}{Τι προσέχουμε:}
+\en
+\begin{SQL}
+  SELECT d.depid, d.depname, e.empid, e.lastname 
+    FROM departments d, employees e;
+\end{SQL}
+\el
+\begin{enumerate}
+  \item Η χρήση ψευδωνύμων είναι προαιρετική.
+  \item Βολεύει όταν το όνομα του πίνακα γράφεται πολλές φορές.
+\end{enumerate} 
+\end{block}
+\pause
+\begin{block}{Ίδιοι κανόνες στην {\en SQL92}:}
+\en
+\begin{SQL}
+  SELECT d.depid, d.depname, e.empid, e.lastname 
+    FROM departments d CROSS JOIN employees e;
+\end{SQL}
+\el
+\end{block}
+\end{minipage}
+\end{frame}
+
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Καρτεσιανό γινόμενο υπαλλήλων και έργων}
+\begin{minipage}{\wE}
+\en
+\begin{SQL}
+  SELECT e.empid, p.proid
+    FROM employees e, projects p;
+
+| empid | proid |
+-----------------
+|   102 |     5 |
+|   102 |    12 |
+|   102 |    14 |
+|   102 |    21 |
+|   102 |    38 |
+|   102 |    43 |
+|   109 |     5 |
+|   109 |    12 |
+.................
+180 rows in set (0.00 sec)
+\end{SQL}
+\el
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Καρτεσιανού γινόμενο υπαλλήλων και έργων}
+\begin{minipage}{\wE}
+%\begin{block}{\[ \Pi_{empid, proid} \left(\varrho_{e}(employees) \times \varrho_{p} (projects) \right) \]}
+%\vspace*{-0.4cm}
+\en
+\begin{SQL}
+  SELECT e.empid, p.proid
+    FROM employees e, projects p;
+\end{SQL}
+\el
+%\end{block}
+%\footnotesize 
+\pause
+\begin{enumerate} %[<+->]
+  \item Το αποτέλεσμα συνδέει {\crr όλους} τους υπαλλήλους με {\crr όλα} τα έργα.
+  \item Είναι {\crr πιθανό} ένας υπάλληλος να απασχολείται σε όλα τα έργα,
+        αλλά αυτό δεν συμβαίνει {\crr υποχρεωτικά} για όλους τους υπαλλήλους.
+  \item Είναι {\crr πιθανό} ένα έργο να απασχολεί όλους τους υπαλλήλους,
+        αλλά αυτό δεν συμβαίνει {\crr υποχρεωτικά} για όλα τα έργα.
+  \item Το καρτεσιανό γινόμενο μας δίνει όλα τα {\crr πιθανά ενδεχόμενα}, δεν μας
+        αποκαλύπτει το «τι συμβαίνει».
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Σύζευξη θήτα στην {\en SQL}}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{exampleblock}{Σύζευξη τμημάτων και υπαλλήλων}
+\[ departments \bowtie_{departments.depid = employees.depid} employees \]
+\vspace*{-0.5cm}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments, employees
+   WHERE departments.depid = employees.depid;
+\end{SQL}
+\el
+\end{exampleblock}
+\pause
+\begin{enumerate} % [<+->] \pause
+  \item Προσέξτε τη γραφή {\bb πίνακας.πεδίο}.
+  \item Στη φράση {\sq WHERE} μπορούν να προστεθούν   επιπλέον
+        περιορισμοί με λογική σύζευξη ({\sq AND}).
+  \item Η θήτα σύζευξη είναι δυνατό να πραγματοποιηθεί  και με πεδία
+        που δεν έχουν το ίδιο όνομα.
+  \item Στο αποτέλεσμα εμφανίζονται μόνο οι εγγραφές για τις οποίες η συνθήκη είναι {\sq TRUE}.      
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{θ σύζευξη, επιπλέον παράδειγμα}
+\begin{minipage}{\wE}
+\begin{exampleblock}{Τμήματα με υπαλλήλους με μισθό πάνω από 1500 \euro}
+\en
+\begin{SQL}
+  SELECT DISTINCT d.depname
+    FROM departments d, employees e
+   WHERE d.depid = e.depid
+     AND e.salary > 1500;
+\end{SQL}
+\el
+\end{exampleblock}
+\pause
+\begin{enumerate} % [<+->] \pause
+  \item Περιορισμός εγγραφών της θ σύζευξης με βάση μια παράσταση σύγκρισης.
+  \item Στο αποτέλεσμα εμφανίζονται μόνο οι εγγραφές για τις οποίες όλες οι είναι {\sq TRUE}.
+  \item Η θ σύζευξη δεν έχει νόημα να ακολουθείται από λογική διάζευξη {\sq OR}.  
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{θ σύζευξη στην {\en SQL} 1:1}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να βρεθούν τα ονοματεπώνυμα των υπαλλήλων που είναι διευθυντές τμημάτων}
+\en
+\begin{SQL}
+  SELECT firstname, lastname
+    FROM departments, employees
+   WHERE departments.manager = employees.empid;
+\end{SQL}
+\el
+\end{exampleblock}
+\pause
+\begin{exampleblock}{\small Να βρεθεί το ονοματεπώνυμο του υπαλλήλου που διευθύνει το τμήμα 2}
+\en
+\begin{SQL}
+  SELECT firstname, lastname
+    FROM departments, employees
+   WHERE departments.manager = employees.empid
+     AND departments.depid = 2;
+\end{SQL}
+\el
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{θ σύζευξη στην {\en SQL} Ν:Ν}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να βρεθεί ο τίτλος των έργων και τα ονοματεπώνυμα των υπαλλήλων που συμμετέχουν σε αυτά.}
+\en
+\begin{SQL}
+  SELECT title, firstname, lastname
+    FROM employees, workson, projects
+   WHERE employees.empid = workson.empid
+     AND workson.proid = projects.proid;
+\end{SQL}
+\el
+\end{exampleblock}
+\pause
+\begin{alertblock}{\small Να βρεθεί ο τίτλος των έργων και τα ονοματεπώνυμα των υπαλλήλων που συμμετέχουν σε αυτά.}
+\en
+\begin{SQL}
+  SELECT title, firstname, lastname
+    FROM employees, projects
+   WHERE employees.empid = workson.empid
+     AND workson.proid = projects.proid;
+\end{SQL}
+\el
+\end{alertblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{θ ανισοσύζευξη στην {\en SQL}}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{alertblock}{\small Να βρεθούν τα ονοματεπώνυμα των υπαλλήλων που προσλήφθηκαν μετά την έναρξη του έργου με κωδικό 21.}
+\en
+\begin{SQL}
+  SELECT firstname, lastname
+    FROM employees, workson, projects
+   WHERE employees.empid = workson.empid
+     AND workson.proid = projects.proid
+     AND employees.hiredate > projects.startdate
+     AND projects.proid = 21;
+\end{SQL}
+\el
+\end{alertblock}
+\pause
+\vspace*{-0.4cm}
+\begin{exampleblock}{\small Να βρεθούν τα ονοματεπώνυμα των υπαλλήλων που προσλήφθηκαν μετά την έναρξη του έργου με κωδικό 21.}
+\en
+\begin{SQL}
+  SELECT firstname, lastname
+    FROM employees, projects
+   WHERE employees.hiredate > projects.startdate
+     AND projects.proid = 21;
+\end{SQL}
+\el
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Μετονομασία πινάκων}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{block}{Με χρήση του {\en AS}}
+\en
+\begin{SQL}
+    FROM employees AS e
+\end{SQL}
+\el
+\end{block}
+\vspace*{-0.4cm}
+\begin{block}{Χωρίς χρήση του {\en AS}}
+\en
+\begin{SQL}
+    FROM employees e
+\end{SQL}
+\el
+\end{block}
+\pause
+\vspace*{-0.4cm}
+\begin{block}{Στη σύζευξη}
+\en
+\begin{SQL}
+    FROM departments d, employees e
+\end{SQL}
+\el
+\end{block}
+\pause
+\vspace*{-0.4cm}
+\begin{block}{Στο ερώτημα}
+\en
+\begin{SQL}
+  SELECT e.firstname, e.lastname
+    FROM employees e, projects p
+   WHERE e.hiredate > p.startdate
+     AND p.proid = 21;   
+\end{SQL}
+\el
+\end{block}
+\end{minipage}
+\end{frame}

@@ -1,0 +1,328 @@
+\section[]{\textgreek{Εξωτερική σύζευξη πινάκων στην \textlatin{SQL}}}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα εξωτερικής σύζευξης -- το πρόβλημα}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{exampleblock}{\small Να βρεθούν τα ονόματα των υπαλλήλων του τμήματος 4
+              και οι κωδικοί των έργων που συμμετέχουν}
+\en
+\[
+\begin{array}{l}
+  \Pi_{e.firstname, e.lastname, w.proid}
+  (\sigma_{e.depid=4}                    \\
+    ( \varrho_{e} (employees) \bowtie_{d.depid=e.depid} \varrho_{w} (workson) )
+  )
+\end{array}
+\]
+\pause
+\vspace*{-0.5cm}
+\begin{SQL}
+  SELECT e.firstname, e.lastname, w.proid
+    FROM employees e INNER JOIN workson w
+         ON e.empid = w.empid
+   WHERE e.depid = 4;
+\end{SQL}
+\el
+\end{exampleblock}
+\small
+\begin{columns}
+\begin{column}{0.55\linewidth}
+\scalebox{0.9}{
+\begin{tabular}{l l r} \toprule
+{\bb\en firstname} & {\bb\en lastname} & {\bb\en proid} \\  \midrule
+Νίκος & Βλάχος & 12 \\
+Βαγγέλης & Χριστόπουλος & 12 \\
+Βαγγέλης & Χριστόπουλος & 14 \\
+Βαγγέλης & Χριστόπουλος & 38 \\
+Παύλος & Περίδης & 43 \\ \bottomrule
+\end{tabular}
+}
+\end{column}
+\begin{column}{0.5\linewidth}
+  \par \color{red} Τι γίνεται με τους υπαλλήλους του τμήματος 4 που δεν απασχολούνται σε κανένα έργο?
+\end{column}
+\end{columns}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα εξωτερικής σύζευξης -- Η λύση}
+\begin{minipage}{\wE}
+\small
+\vspace*{-0.5cm}
+\begin{exampleblock}{\small Υπάλληλοι του τμήματος 4
+              και οι κωδικοί των έργων}
+\[
+\begin{array}{l}
+  \Pi_{e.firstname, e.lastname, w.proid}
+  (\sigma_{e.depid=4}                    \\
+    ( \varrho_{e}(employees) \lojoin_{e.empid = w.empid} \varrho_{w}(workson) )
+  )
+\end{array}
+\]
+\pause
+\vspace*{-0.5cm}
+\en
+\begin{SQL}
+  SELECT e.firstname, e.lastname, w.proid
+    FROM employees e LEFT JOIN workson w
+         ON e.empid = w.empid
+   WHERE e.depid = 4;
+\end{SQL}
+\end{exampleblock}
+\el
+\small
+\pause
+\begin{columns}[T]
+\begin{column}{0.55\linewidth}
+\vspace{-0.4cm}
+\scalebox{0.9}{
+\begin{tabular}{l l r} \toprule
+{\bb\en firstname} & {\bb\en lastname} & {\bb\en proid} \\  \midrule
+Νίκος & Βλάχος & 12 \\
+Βαγγέλης & Χριστόπουλος & 12 \\
+Βαγγέλης & Χριστόπουλος & 14 \\
+Βαγγέλης & Χριστόπουλος & 38 \\
+\rowcolor{yellow!50!brown}
+Νίκος & Στεργιόπουλος & {\sq NULL} \\
+Παύλος & Περίδης & 43 \\
+\rowcolor{yellow!50!brown}
+Ευθαλεία & Μικράκη & {\sq NULL} \\ \bottomrule
+\end{tabular}
+}
+\end{column}
+\begin{column}{0.4\linewidth}
+\small
+  \par Η στήλη {\ra proid} συμπληρώνεται με {\sq NULL}
+       για τους υπαλλήλους που δεν απασχολούνται σε κανένα έργο.
+\end{column}
+\end{columns}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Αριστερή και δεξιά σύζευξη -- Ισοδυναμία}
+\begin{exampleblock}{Αριστερή σύζευξη}
+\en
+\[
+\begin{array}{l}
+  \Pi_{e.firstname, e.lastname, w.proid}
+  (\sigma_{e.depid=4}                    \\
+    ( \varrho_{e}(employees) \lojoin_{e.empid = w.empid} \varrho_{w}(workson) )
+  )
+\end{array}
+\]
+\begin{SQL}
+  SELECT e.firstname, e.lastname, w.proid
+    FROM employees e {&color{red}&bf LEFT JOIN} workson w
+         ON e.empid = w.empid
+   WHERE e.depid = 4;
+\end{SQL}
+\end{exampleblock}
+\el
+\begin{exampleblock}{Δεξιά σύζευξη}
+\en
+\[
+\begin{array}{l}
+  \Pi_{e.firstname, e.lastname, w.proid}
+  (\sigma_{e.depid=4}                    \\
+    ( \varrho_{w}(workson) \rojoin_{w.empid = e.empid}   \varrho_{e}(employees) )
+  )
+\end{array}
+\]
+\begin{SQL}
+  SELECT e.firstname, e.lastname, w.proid
+    FROM workson w {&color{red}&bf RIGHT JOIN} employees e
+         ON w.empid = e.empid
+   WHERE e.depid = 4;
+\end{SQL}
+\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\el
+\frametitle{Αριστερή και δεξιά σύζευξη}
+\large
+\begin{enumerate} \itemsep 6pt % [<+->] \pause 
+\item Οι δύο προτάσεις {\sq SQL} είναι απολύτως {\bb ισοδύναμες}
+και δίνουν το ίδιο αποτέλεσμα.
+
+\item Κατά παράδοση, προτιμάται η {\bb αριστερή} σύζευξη.
+
+\item
+Οι εξωτερικές συζεύξεις χρησιμοποιούνται όταν  θέλουμε στο
+αποτέλεσμα όλες τις εγγραφές
+ενός πίνακα, ανεξάρτητα αν αυτές έχουν σύνδεση με τον άλλο πίνακα
+που υπάρχει στη σύζευξη.
+
+\item
+Κατά την εξωτερική σύζευξη, αν υπάρχουν  μη συνδεδεμένες εγγραφές,
+δημιουργούνται τιμές {\sq NULL}.
+
+\item
+Ο έλεγχος ({\sq WHERE}) για τιμές {\sq NULL}
+είναι πολύ συχνός στις εξωτερικές συνδέσεις.
+
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Εξωτερική σύζευξη και έλεγχος {\en NULL}}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{exampleblock}{\small Ποιοι υπάλληλοι δεν απασχολούνται σε κανένα έργο?}
+\en
+\[
+\begin{array}{l}
+  \Pi_{e.*}
+  (\sigma_{w.empid \text{ IS NULL}}                    \\
+    ( \varrho_{e}(employees) \lojoin_{e.empid = w.empid} \varrho_{w}(workson) )
+  )
+\end{array}
+\]
+\pause
+\en
+\begin{SQL}
+  SELECT e.*
+    FROM employees e LEFT JOIN workson w
+                       ON e.empid = w.empid
+   WHERE w.empid IS NULL;
+\end{SQL}
+\el
+\end{exampleblock}
+\small
+\begin{enumerate}
+  \item Το ερώτημα δε μπορεί να απαντηθεί με φυσική ή εσωτερική σύζευξη.
+  \item Οι τιμές των πεδίων {\ra e.empid} και {\ra w.empid}   είτε ταυτίζονται,
+        είτε κάποια τιμή   του πεδίου {\ra e.empid}  δεν έχει    αντίστοιχη
+        τιμή στον πίνακα {\ra workson}.
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Εξωτερική σύζευξη -- επιπλέον ανάλυση}
+\begin{minipage}{\wE}
+\vspace{-0.5cm}
+\begin{exampleblock}{\small Ποιοι υπάλληλοι δεν απασχολούνται σε κανένα έργο?}
+\en
+\begin{SQL}
+  SELECT e.empid, w.empid
+    FROM employees e LEFT JOIN workson w
+         ON e.empid = w.empid
+   WHERE w.empid IS NULL;
+\end{SQL}
+\end{exampleblock}
+\el
+\vspace{-0.2cm}
+\pause
+\begin{columns}
+\begin{column}{0.4\linewidth}
+\begin{tabular}{r r}  \toprule
+{\ra e.empid} & {\ra w.empid} \\ \midrule
+205 & {\en NULL} \\
+311 & {\en NULL} \\
+342 & {\en NULL} \\
+... & ... \\ \bottomrule
+\end{tabular}
+\end{column}
+\begin{column}{0.55\linewidth}
+\begin{itemize} \pause
+  \item 205: υπάρχει στον πίνακα {\ra employees}
+        αλλά δεν υπάρχει στον πίνακα {\ra workson}.
+  \item Η αριστερή σύζευξη επιτρέπει  την εμφάνιση της τιμής  205
+        στο  πεδίο {\ra e.empid}.
+  \item Το πεδίο {\ra w.empid} θα συμπληρωθεί  με {\sq NULL}.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Εξωτερική σύζευξη -- σύνοψη}
+\begin{minipage}{\wE}
+\pause
+\begin{enumerate} \itemsep 4pt % [<+->]
+  \item Κάποιες εγγραφές του πίνακα {\ra employees} δεν έχουν ταιριαστές
+        εγγραφές στον πίνακα {\ra workson}.
+  \item Ο πίνακας {\ra workson} δεν περιέχει καμία εγγραφή με {\sq NULL} τιμές
+        Ο τρόπος με τον οποίο έγινε η σύζευξη 
+        των πινάκων παρήγαγε τις τιμές {\sq NULL}.
+  \item Η αριστερή εξωτερική σύζευξη ορίζει πως
+        στο αποτέλεσμα θα υπάρχουν όλες οι εγγραφές του αριστερού πίνακα και
+        στα πεδία του δεξιού πίνακα θα τοποθετηθούν είτε τιμές που αντιστοιχούν
+        στον κανόνα της σύζευξης είτε τιμές {\sq NULL},
+        εκεί όπου δεν βρέθηκαν ταιριαστές εγγραφές.
+  \item Επομένως οι  εγγραφές με {\sq NULL} τιμές στα πεδία του   πίνακα {\ra workson},
+        δεν οφείλονται σε αποθηκευμένες τιμές   αλλά σε παραγόμενες μετά από
+        εξωτερική σύζευξη.
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Εξωτερική σύζευξη 1:1}
+\begin{minipage}{\wE}
+\vspace{-0.5cm}
+\begin{exampleblock}{\small Να βρεθεί ο κωδικός και το όνομα των υπαλλήλων που δεν είναι διευθυντές}
+\en
+\begin{SQL}
+  SELECT e.empid, e.firstname, e.lastname
+    FROM employees e LEFT JOIN departments d
+         ON e.empid = d.manager   
+   WHERE d.manager IS NULL;
+\end{SQL}
+\end{exampleblock}
+\el
+\vspace{-0.2cm}
+\pause
+\begin{alertblock}{\small Να βρεθεί ο κωδικός και το όνομα των υπαλλήλων που δεν είναι διευθυντές}
+\en
+\begin{SQL}
+  SELECT e.empid, e.firstname, e.lastname
+    FROM employees e INNER JOIN departments d
+         ON e.empid = d.manager
+   WHERE d.manager IS NULL;
+\end{SQL}
+\end{alertblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Εξωτερική ή εσωτερική σύζευξη?}
+\begin{minipage}{\wE}
+\vspace{-0.5cm}
+\begin{block}{\footnotesize Να βρεθεί ο κωδικός και το όνομα των υπαλλήλων που {\bf είναι} διευθυντές}
+\en
+\begin{SQL}
+  SELECT e.empid, e.firstname, e.lastname
+    FROM employees e LEFT JOIN departments d
+         ON e.empid = d.manager
+   WHERE d.manager IS NOT NULL;
+\end{SQL}
+\end{block}
+\el
+\vspace{-0.2cm}
+\pause
+\begin{block}{\footnotesize  Να βρεθεί ο κωδικός και το όνομα των υπαλλήλων που {\bf είναι}  διευθυντές}
+\en
+\begin{SQL}
+  SELECT e.empid, e.firstname, e.lastname
+    FROM employees e INNER JOIN departments d
+         ON e.empid = d.manager;
+\end{SQL}
+\end{block}
+\par {\crr Σχολιάστε διαφορές και ομοιότητες στο αποτέλεσμα.}
+\end{minipage}
+\end{frame}
