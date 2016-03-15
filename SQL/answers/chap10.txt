@@ -1,0 +1,163 @@
+
+Κεφάλαιο 10
+
+Ενότητα 10.3
+
+1) Να βρεθεί το ονοματεπώνυμο και ο μισθός όλων των υπαλλήλων που δεν εργάζονται στο τμήμα 3.
+
+  SELECT firstname, lastname, salary
+    FROM employees
+   WHERE depid != 3;
+
+2) Να βρεθεί ο κωδικός του τμήματος όπου εργάζεται ο υπάλληλος με κωδικό 109.
+
+  SELECT depid
+    FROM employees
+   WHERE empid = 109;
+
+3) Να βρεθεί το όνομα και το επώνυμο του υπαλλήλου με κωδικό 109.
+ 
+  SELECT firstname, lastname
+    FROM employees
+   WHERE empid = 109;
+
+4) Να βρεθεί ο μισθός του υπαλλήλου με κωδικό 435
+
+  SELECT salary
+    FROM employees
+   WHERE empid = 435;
+
+5) Να βρεθεί το όνομα και ο μισθός των υπαλλήλων που προσλήφθηκαν μετά την ημερομηνία 1/2/2002.
+
+  SELECT firstname, lastname, salary
+    FROM employees
+   WHERE hiredate > '2002-02-01';
+
+6) Να βρεθεί το όνομα και η ημερομηνία πρόσληψης των υπαλλήλων με μισθό μεγαλύτερο ή ίσο του 1800 €.
+
+  SELECT firstname, lastname, hiredate
+  FROM employees
+  WHERE salary >= 1800;
+
+7) Να βρεθούν οι υπάλληλοι με επώνυμο μετά το "Σταυρίδη". 
+
+  SELECT *
+    FROM employees
+   WHERE lastname > 'Σταυρίδη';
+
+
+Ενότητα 10.4
+   
+1) Να βρεθεί ο κωδικός και ο μισθός των υπαλλήλων του τμήματος 2 μετά από αύξηση 3% του μισθού
+
+  SELECT empid, salary*0.03
+    FROM employees
+   WHERE depid = 2;
+
+2) Να βρεθεί ο κωδικός και το όνομα των υπαλλήλων που αν πάρουν αύξηση 6% ο μισθός τους θα αυξηθεί περισσότερο από 75 €.
+
+  SELECT empid, firstname, lastname
+    FROM employees
+   WHERE salary*0.06 > 75;
+
+   
+Ενότητα 10.5
+
+1) Να βρεθούν οι κωδικολι των υπαλλήλων που απασχολούνται στo έργo με κωδικό 12, με φθίνουσα ταξινόμηση ως προς τον κωδικό.
+
+  SELECT empid
+    FROM workson
+   WHERE proid = 12 
+ORDER BY empid DESC;   
+
+2) Να βρεθεί ο κωδικός και η ημερομηνία λήξης όλων των έργων, με φθίνουσα ταξινόμηση ως προς την ημερομηνία έναρξης.
+
+  SELECT proid, enddate
+    FROM projects
+ORDER BY startdate DESC;
+
+3) Να βρεθούν όλες οι λεπτομέρειες των υπαλλήλων του τμήματος 5, με αύξουσα ταξινόμηση ως προς το επώνυμο.
+
+  SELECT *
+    FROM employees
+   WHERE depid = 5
+ORDER BY lastname ASC;
+
+
+Ενότητα 10.7
+
+1) Να βρεθεί η ημερομηνία πρόσληψης του υπαλλήλου με κωδικό 243.
+
+  SELECT hiredate
+    FROM employees
+   WHERE empid = 243;
+
+2) Να βρεθούν οι κωδικοί των υπαλλήλων που εργάζονται στο έργο με κωδικό 21.
+
+  SELECT empid
+    FROM workson
+   WHERE proid = 21; 
+
+3) Να βρεθούν τα ονόματα και οι ημερομηνίες πρόσληψης των υπαλλήλων με μισθό κάτω του 1.800 € με αύξουσα ταξινόμηση ως προς το μισθό. 
+
+  SELECT firstname, lastname, hiredate
+    FROM employees
+   WHERE salary < 1800
+ORDER BY salary ASC;
+
+
+4) Να βρεθεί ο κωδικός και η ημερομηνία πρόσληψης των υπαλλήλων του τμήματος 4 με φθίνουσα ταξινόμηση ως προς την ημερομηνία πρόσληψης.
+
+   SELECT empid, hiredate
+   FROM employees
+   WHERE depid = 4
+   ORDER BY hiredate DESC;
+
+5) Να βρεθούν τα έργα με προϋπολογισμό άνω του 100.000 € με αύξουσα ταξινόμηση ως προς την ημερομηνία έναρξης.
+
+  SELECT *
+    FROM projects
+   WHERE budjet> 100000
+ORDER BY startdate DESC;
+   
+6) Να βρεθεί o κωδικός και η ποσοστιαία αύξηση του μισθού όλων των υπαλλήλων του τμήματος 3
+   μετά από αύξηση 100 € στον μισθό τους.    
+   
+  SELECT empid, 100*100/salary
+    FROM employees 
+   WHERE depid = 3;  
+   
+7) Να βρεθεί ο κωδικός και ο νέος προϋπολογισμός των έργων με έναρξη μετά την 1/1/2003 και αύξηση κατά 5% του προϋπολογισμού.
+
+   SELECT proid, budjet*0.05
+   FROM projects
+   WHERE hiredate> '2003-01-01';
+
+
+8) Να βρεθούν όλες οι λεπτομέρειες των υπαλλήλων του τμήματος 2 με αύξουσα ταξινόμηση ως προς το επώνυμο. 
+
+  SELECT *
+    FROM employees
+   WHERE depid=2
+ORDER BY lastname ASC;
+
+9) Να βρεθεί ο κωδικός και η ημερομηνία λήξης όλων των έργων με προϋπολογισμό μέχρι και 50.000 €. 
+
+  SELECT proid, enddate
+    FROM projects
+   WHERE budget <= 50000;
+   
+10)  Να βρεθούν όλες οι λεπτομέρειες των υπαλλήλων που προσλήφθηκαν πριν από την ημερομηνία 1/1/2003
+     με αύξουσα ταξινόμηση ως προς το επώνυμο.   
+
+  SELECT *
+    FROM employees 
+   WHERE hiredate < '2003-01-01'
+ORDER BY lastname;  
+        
+11) Να βρεθεί το όνομα και ο κωδικός τμήματος των υπαλλήλων με μισθό μεγαλύτερο του 1.200 € με αύξουσα ταξινόμηση ως προς επώνυμο και κωδικό τμήματος. 
+
+  SELECT firstname, lastname, depid
+    FROM employees
+   WHERE salary > 1200
+ORDER BY lastname, depid ASC;
