@@ -1,0 +1,208 @@
+
+\section[{\en dbUpdate}]{\textgreek{Ενημέρωση της βάσης δεδομένων}}
+
+%\frame{\el\tableofcontents[currentsection]}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Ενημέρωση}
+\begin{minipage}{\wE}
+Εκτός από τις πράξεις επιλογής, η σχεσιακή άλγεβρα έχει ανάγκη από τις πράξεις
+ενημέρωσης της βάσης δεδομένων.
+Με αυτές υπάρχει η δυνατότητα:
+\begin{itemize} \itemsep9pt
+    \item {\bf Εισαγωγής} δεδομένων στις σχέσεις, δηλαδή εισαγωγής μιας ή περισσοτέρων
+          πλειάδων.
+    \item {\bf Τροποποίησης} δεδομένων στις σχέσεις, δηλαδή αλλαγή στις τιμές των
+          γνωρισμάτων μιας σχέσης.
+    \item {\bf Διαγραφής} δεδομένων από τις σχέσεις, δηλαδή απαλοιφή μιας ή περισσότερων
+          πλειάδων της σχέσης.          
+\end{itemize}
+\end{minipage}  
+\end{frame}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Επιπτώσεις της ενημέρωσης}
+\begin{minipage}{\wE}
+  \begin{block}{Σχήμα της σχέσης}
+    \begin{itemize} \itemsep9pt
+      \item Δεν επηρεάζεται το σχήμα της σχέσης.
+      \item Δεν μεταβάλλεται ο βαθμός της σχέσης.
+    \end{itemize}
+  \end{block}
+  \begin{block}{Κορμός της σχέσης}
+    \begin{itemize} \itemsep9pt
+      \item {\bf Εισαγωγή :} αύξηση πληθικότητας.
+      \item {\bf Τροποποίηση :} σταθερή πληθικότητα.
+      \item {\bf Διαγραφή :} μείωση πληθικότητας.
+    \end{itemize}
+  \end{block}
+\end{minipage}  
+\end{frame}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{H σχέση {\en movies}}
+\begin{minipage}{\wE}
+  \par
+  Έστω η σχέση $movies(code, title, year)$: \\
+  \par 
+  \begin{tabular}{ c l c } \toprule
+    {\en\bf code} & {\en\bf title} & {\en\bf year} \\  \midrule
+    658 & {\en Blade Runner}  & 1982 \\
+    583 & {\en Casablanca}    & 1943 \\
+    779 & {\en La Dolce Vita} & 1960 \\
+    884 & {\en Paris Texas}   & 1984 \\ \bottomrule
+  \end{tabular}
+  \par
+  \bigskip
+  Μια μικρή βάση δεδομένων με τίτλους ταινιών και το έτος πρώτης προβολής. \\
+  Το γνώρισμα {\en\em code} είναι πρωτεύον κλειδί.
+\end{minipage}  
+\end{frame}
+
+
+\subsection[{\en Insert}]{\textgreek{Εισαγωγή πλειάδων}}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Εισαγωγή}
+\begin{minipage}{\wE}
+  \begin{block}{Η εισαγωγή των δεδομένων $E$ (σχεσιακής έκφρασης) στη σχέση $r$, γράφετε ως:}
+  \[
+     r \leftarrow r \cup E
+  \]
+  \end{block}
+  \begin{exampleblock}{Εισαγωγή της ταινίας {\en Blade Runner} του 1982 με κωδικό 658}
+    \en
+    \[
+      movies \leftarrow movies \cup \{658, \text{'Blade Runner', 1982} \}
+    \]
+  \end{exampleblock}
+\end{minipage}  
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παραβίαση πρωτεύοντος κλειδιού}
+\begin{minipage}{\wE}
+
+  \el
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+  \begin{tabular}{ c l c } \toprule
+    {\en\bf code} & {\en\bf title} & {\en\bf year} \\  \midrule
+    658 & {\en  Blade Runner} & 1982 \\
+    583 & {\en Casablanca}    & 1943 \\
+    779 & {\en La Dolce Vita} & 1960 \\
+    884 & {\en Paris Texas}   & 1984 \\ \bottomrule
+        &                     &       \\
+  \end{tabular}      
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      {\color{red!90!blue}
+      \begin{tabular}{ c l c } \toprule
+        {\en\bf code} & {\en\bf title} & {\en\bf year} \\  \midrule
+        658 & {\en  Blade Runner} & 1982 \\
+        583 & {\en Casablanca}    & 1943 \\
+        779 & {\en La Dolce Vita} & 1960 \\
+        884 & {\en Paris Texas}   & 1984 \\
+            & {\en The Pink Panther} & 1963 \\ \bottomrule            
+      \end{tabular}
+      }
+    \end{column}
+  \end{columns}
+  \begin{alertblock}{Η τιμή του πρωτεύοντος κλειδιού δεν είναι έγκυρη}
+  \en
+  \[
+    movies \leftarrow movies \cup \{779, \text{'The Pink Panther', 1963} \}
+  \]
+  \el
+  Η παράσταση δεν είναι έγκυρη, η εισαγωγή {\bf πλειάδας} θα αποτύχει.
+  \end{alertblock}
+\end{minipage}  
+\end{frame}
+
+
+\subsection[{\en Update}]{\textgreek{Τροποποίηση πλειάδων}}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Τροποποίηση}
+\begin{minipage}{\wE}
+  \begin{block}{Τελεστής γενικευμένης προβολής}
+    \[
+       r \leftarrow \Pi_{A_1,A_2,\ldots,A_n}(r)
+    \]
+  \end{block}
+  \begin{exampleblock}{Αλλαγή του έτους κυκλοφορίας}
+  \en
+  \[
+    movies \leftarrow \Pi_{code, title, year=1942} (movies)
+  \]
+  \end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Τροποποίηση του έτους σε 1942}
+\begin{minipage}{\wE}
+  \begin{block}{Καθολική εφαρμογή της τροποποίησης}
+    \[
+      movies \leftarrow \Pi_{code, title, year=1942} (movies)
+    \]  
+    \begin{tabular}{ c l c } \toprule
+      {\en\bf code} & {\en\bf title} & {\en\bf year} \\  \midrule
+      658 & {\en  Blade Runner} & 1942 \\
+      583 & {\en Casablanca}    & 1942 \\
+      779 & {\en La Dolce Vita} & 1942 \\
+      884 & {\en Paris Texas}   & 1942 \\ \bottomrule
+    \end{tabular}
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Τροποποίηση του έτους σε 1942}
+\begin{minipage}{\wE}
+  \begin{block}{Επιλεκτική εφαρμογή της τροποποίησης}
+    \[
+      movies \leftarrow \Pi_{code, title, year=1942}(\sigma_{code=583}(movies))
+    \]
+    \begin{tabular}{ c l c } \toprule
+      {\en\bf code} & {\en\bf title} & {\en\bf year} \\  \midrule
+      658 & {\en  Blade Runner} & 1982 \\
+      583 & {\en Casablanca}    & 1942 \\
+      779 & {\en La Dolce Vita} & 1960 \\
+      884 & {\en Paris Texas}   & 1984 \\ \bottomrule
+    \end{tabular}
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+
+\subsection[{\en Delete}]{\textgreek{Διαγραφή πλειάδων}}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Διαγραφή}
+\begin{minipage}{\wE}
+  \begin{block}{Διαγραφή των δεδομένων που προκύπτουν από μια σχεσιακή παράσταση $E$ στη σχέση $r$}
+  \[
+    r \leftarrow r - E
+  \]
+  \end{block}
+  \begin{exampleblock}{Διαγραφή της ταινίας {\en Blade Runner} με κωδικό 658}
+  \en
+  \[
+    movies \leftarrow movies - \sigma_{code=658}(movies)
+  \]
+  \end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+
+
+

@@ -1,0 +1,88 @@
+\section[]{\textgreek{Ασκήσεις επανάληψης}}
+
+% 8
+\begin{frame}[t, fragile, shrink]
+\frametitle{Πλήθος υπαλλήλων ανά έργο ...}
+\begin{minipage}{\wE}
+\vspace{-0.5cm}
+\begin{exampleblock}{\small Να βρεθεί το πλήθος των εργαζομένων με μισθό
+        μικρότερο του 1500, ανά κωδικό και τίτλο έργου,
+        με αύξουσα ταξινόμηση ως προς το πλήθος εργαζομένων,
+        για έργα που απασχολούν λιγότερο 
+        από 5 υπαλλήλους.}
+\pause
+\en
+\begin{SQL}
+  SELECT p.proid, p.title, COUNT(*)
+    FROM (employees e INNER JOIN workson  w
+                         ON e.empid = w.empid)
+                      INNER JOIN projects p
+                         ON p.proid = w.proid    &pause
+   WHERE e.salary < 1500   &pause
+GROUP BY p.proid, p.title  &pause
+  HAVING COUNT(*) < 5      &pause
+ORDER BY COUNT(*) ASC;      
+\end{SQL}
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+% 13
+\begin{frame}[t, fragile, shrink]
+\frametitle{Μισθοδοσία ανά τμήμα ...}
+\begin{minipage}{\wE}
+\vspace{-0.5cm}
+\begin{exampleblock}{\small Να βρεθεί ο κωδικός και το όνομα των τμημάτων, καθώς και το άθροισμα μισθοδοσίας
+        των υπαλλήλων ανά τμήμα, που απασχολούνται σε όλα τα έργα με πρόοδο πάνω
+        από 50\%, και που απασχολούν (τα έργα) περισσότερους από
+        έναν υπαλλήλους.}
+\pause
+\en
+\begin{SQL}
+  SELECT d.depid, d.depname, SUM(DISTINCT e.salary)
+    FROM ((employees e INNER JOIN departments d
+                          ON e.depid = d.depid)
+                       INNER JOIN workson  w
+                          ON e.empid = w.empid)
+                       INNER JOIN projects p
+                          ON p.proid = w.proid   &pause
+   WHERE p.progress > 50          &pause
+GROUP BY d.depid, d.depname       &pause
+  HAVING COUNT(*) > 1;   
+\end{SQL}
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+% 14
+\begin{frame}[fragile, shrink]
+\frametitle{Διευθυντές και έργα}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να βρεθεί το όνομα του τμήματος,
+            το επώνυμο και ο κωδικός του διευθυντή και το πλήθος
+            των έργων στα οποία απασχολείται ο κάθε διευθυντής.}
+\pause
+\en
+\begin{SQL}
+ SELECT d.depname, e.lastname, w.empid, COUNT(*)
+   FROM  (departments d INNER JOIN employees e
+                           ON d.manager = e.empid)
+                         LEFT JOIN workson w
+                           ON e.empid = w.empid  
+GROUP BY d.depname, e.lastname, w.empid;
+\end{SQL}
+\end{exampleblock}
+\vspace{0.2cm}
+\begin{enumerate}
+  \item Σχολιάστε την ύπαρξη της αριστερής σύζευξης.
+        Είναι προαιρετική ή απαραίτητη?
+  \item Θα έχει νόημα να ήταν αριστερή σύζευξη
+        η σύζευξη ανάμεσα σε {\ra departments} και {\ra employees}?
+\end{enumerate}
+
+\end{minipage}
+\end{frame}
+
+

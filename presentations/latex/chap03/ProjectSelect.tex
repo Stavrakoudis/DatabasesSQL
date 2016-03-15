@@ -1,0 +1,278 @@
+
+\section[{\en $\Pi, \sigma$}]{\textgreek{Οι βασικές πράξεις προβολής και επιλογής}}
+
+\subsection[{\en Project}]{\textgreek{Η σχεσιακή πράξη της προβολής}}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Προβολή}
+\begin{minipage}{\wE}
+  \begin{block}{Ορισμός της προβολής}  \Large
+    \[ r[X] = \{t[X] \,|\, t \in r \} \]
+  \end{block}
+  {\bb Προβολή} μιας σχέσης $r(R)$, πάνω στο υποσύνολο γνωρισμάτων της $X$
+  ($X \subseteq R$)
+  είναι μια σχέση με σχήμα το σύνολο $X$ και κορμό εκείνες τις πλειάδες που
+  αντιστοιχούν σε μοναδικές τιμές για τα γνωρίσματα $X$.
+  \par Η προβολή συμβολίζεται με το ελληνικό γράμμα $\Pi$:
+  \[
+    \Pi_{A_1, A_2, \ldots, A_m}(r)
+  \]
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παραδείγματα προβολής}
+\begin{minipage}{\wE}
+\en
+\begin{tabular}{ c c c c c }
+  \begin{tabular}{ c c c }  \toprule
+    {\bf A} & {\bf B} & {\bf C} \\ \midrule
+    5 & a & 30 \\
+    2 & b & 10 \\
+    3 & c & 20 \\
+    5 & b & 10 \\ \bottomrule
+  \end{tabular}
+&
+  \begin{tabular}{ c c }  \toprule
+    {\bf A} & {\bf B}  \\ \midrule
+    5 & a  \\
+    2 & b  \\
+    3 & c  \\
+    5 & b  \\ \bottomrule
+  \end{tabular}
+&
+  \begin{tabular}{ c c }  \toprule
+    {\bf B} & {\bf C}  \\ \midrule
+    a & 30 \\
+    b & 10 \\
+    c & 20 \\         \bottomrule
+      &    \\
+  \end{tabular}
+&
+  \begin{tabular}{ c }  \toprule
+      {\bf B}   \\ \midrule
+      a     \\
+      b     \\
+      c     \\ \bottomrule
+            \\
+  \end{tabular}
+&
+  \begin{tabular}{ c c c }  \toprule
+    {\bf A} & {\bf B} & {\bf C} \\ \midrule
+    5 & a & 30 \\
+    2 & b & 10 \\
+    3 & c & 20 \\
+    5 & b & 10 \\ \bottomrule
+  \end{tabular}
+\\
+      &                &                &              &         \\
+  $r$ & $\Pi_{A,B}(r)$ & $\Pi_{B,C}(r)$ & $\Pi_{B}(r)$ & $\Pi(r)$ \\
+\end{tabular}
+\el
+  \begin{block}{Παρατηρήσεις}
+    \begin{itemize}
+      \item Απαλοιφή διπλοεγγραφών.
+      \item $\Pi(r)$ : Ταυτοτική προβολή.
+    \end{itemize}
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+
+
+\subsection[{\en Project}]{\textgreek{Η σχεσιακή πράξη της επιλογής}}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Επιλογή}
+\begin{minipage}{\wE}
+  \begin{block}{Ορισμός της Επιλογής}  \Large
+    \[ \sigma_{\phi} (r)  = \{t \in r \,|\, t \; \mathrm{satisfies} \; \phi \} \]
+  \normalsize
+  Η επιλογή ή αλλιώς και περιορισμός μιας σχέσης $r(R)$,
+  είναι μια σχέση που έχει το ίδιο σχήμα $R$
+  με τη σχέση $r$
+  και κορμό ένα υποσύνολο του κορμού της $r$ που ικανοποιεί μια συνθήκη,
+  πχ: $X \; \theta \; Y$.
+  \par
+  Η επιλογή συμβολίζεται με:
+  \[
+    \sigma_{X \; \theta \; Y}(r)
+  \]
+  όπου η συνθήκη περιορισμού είναι μια παράσταση που μπορεί
+  να αποτιμηθεί σε \ttrue, \tfalse\ ή \tunk.
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Διευκρινίσεις για την επιλογή}
+\begin{minipage}{\wE}
+  \begin{block}{Τελεστές, τελεσταίοι, συγκρίσεις, \tnull}
+    \begin{enumerate} \itemsep9pt
+      \item Ο τελεστής $\theta$ μπορεί να είναι ένας από $=, \neq, <, \leq, >, \geq$.
+      \item Η τιμή ενός γνωρίσματος μπορεί να συγκριθεί με:
+        \begin{enumerate}
+          \item Την τιμή ενός άλλου γνωρίσματος
+          \item Μια κυριολεκτική τιμή
+          \item Μια αλγεβρική παράσταση
+          \item Μια σχεσιακή παράσταση ({\bb εμφώλευση ερωτημάτων})  
+        \end{enumerate}
+      \item Οι παραστάσεις μπορούν επίσης να περιέχουν τους λογικούς
+            τελεστές  \tand\ ($\wedge$), \tor\ ($\vee$) και \tnot\ ($\neg$). 
+      \item Το αποτέλεσμα μιας σύγκρισης μπορεί να είναι \ttrue, \tfalse\ ή \tunk.      
+    \end{enumerate}
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παραδείγματα επιλογής}
+\begin{minipage}{\wE}
+  Έστω η σχέση {\en\em employees} : \\ 
+  \begin{tabular}{ l l l } \toprule
+    {\en\bf empid} & {\en\bf name} & {\en\bf salary} \\ \midrule
+    101 & Αθανασίου Μιχ. & 1200 \\
+    102 & Βαφειάδης Νικ. & 1150 \\
+    104 & Νικολοπούλου Ναν. & 1570 \\
+    108 & Βασιλειάδη Μαρ. & 1320 \\ \bottomrule
+  \end{tabular}
+  \par
+  \bigskip
+  \par Παραδείγματα: \Large
+  \begin{enumerate} \itemsep9pt
+    \item $ \sigma_{salary<1300}(employees) $
+    \item $ \sigma_{salary\geq1200 \wedge salary\leq1600}(employees) $
+    \item $ \sigma_{empid=102}(employees) $
+  \end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Υπάλληλοι με μισθό $<1300$}
+\begin{minipage}{\wE}
+  \begin{tabular}{ l l l } \toprule
+    {\en\bf empid} & {\en\bf name} & {\en\bf salary} \\ \midrule
+    101 & Αθανασίου Μιχ. & 1200 \\
+    102 & Βαφειάδης Νικ. & 1150 \\
+    104 & Νικολοπούλου Ναν. & 1570 \\
+    108 & Βασιλειάδη Μαρ. & 1320 \\ \bottomrule
+  \end{tabular}
+  \begin{block}{Απάντηση}
+    \[ \sigma_{salary<1300}(employees) \]
+  \end{block}
+  \begin{tabular}{ l l l } \toprule
+    {\en\bf empid} & {\en\bf name} & {\en\bf salary} \\ \midrule
+    101 & Αθανασίου Μιχ. & 1200 \\
+    102 & Βαφειάδης Νικ. & 1150 \\ \bottomrule
+  \end{tabular}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Υπάλληλοι με μισθό μεταξύ 1200 και 1600}
+\begin{minipage}{\wE}
+  \begin{tabular}{ l l l } \toprule
+    {\en\bf empid} & {\en\bf name} & {\en\bf salary} \\ \midrule
+    101 & Αθανασίου Μιχ. & 1200 \\
+    102 & Βαφειάδης Νικ. & 1150 \\
+    104 & Νικολοπούλου Ναν. & 1570 \\
+    108 & Βασιλειάδη Μαρ. & 1320 \\ \bottomrule
+  \end{tabular}
+  \begin{block}{Απάντηση}
+    \[ \sigma_{salary\geq1200 \wedge salary\leq1600}(employees) \]
+  \end{block}
+  \begin{tabular}{ l l l } \toprule
+    {\en\bf empid} & {\en\bf name} & {\en\bf salary} \\ \midrule
+    101 & Αθανασίου Μιχ. & 1200 \\
+    104 & Νικολοπούλου Ναν. & 1570 \\
+    108 & Βασιλειάδη Μαρ. & 1320 \\ \bottomrule
+  \end{tabular}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Ο υπάλληλος με κωδικό 101}
+\begin{minipage}{\wE}
+  \begin{tabular}{ l l l } \toprule
+    {\en\bf empid} & {\en\bf name} & {\en\bf salary} \\ \midrule
+    101 & Αθανασίου Μιχ. & 1200 \\
+    102 & Βαφειάδης Νικ. & 1150 \\
+    104 & Νικολοπούλου Ναν. & 1570 \\
+    108 & Βασιλειάδη Μαρ. & 1320 \\ \bottomrule
+  \end{tabular}
+  \begin{block}{Απάντηση}
+    \[ \sigma_{empid=102}(employees) \]
+  \end{block}
+  \begin{tabular}{ l l l } \toprule
+    {\en\bf empid} & {\en\bf name} & {\en\bf salary} \\ \midrule
+    101 & Αθανασίου Μιχ. & 1200 \\ \bottomrule
+  \end{tabular}
+\end{minipage}
+\end{frame}
+
+
+\subsection[{\en Project}]{\textgreek{Συνδυασμός προβολής και επιλογής}}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Συνδυασμός προβολής και επιλογής}
+\begin{minipage}{\wE}
+  \begin{block}{Συνδυασμός σχεσιακών πράξεων}
+    \begin{enumerate} \itemsep6pt
+      \item Στο αποτέλεσμα μια προβολής μπορεί να εφαρμοστεί επιλογή.
+      \item Στο αποτέλεσμα μια επιλογής μπορεί να εφαρμοστεί προβολή.
+      \item Στο αποτέλεσμα μια προβολής μπορεί να εφαρμοστεί νέα προβολή.   
+      \item Στο αποτέλεσμα μια επιλογής μπορεί να εφαρμοστεί νέα επιλογή.       
+    \end{enumerate}
+  \end{block}
+  \begin{alertblock}{Κλειστότητα}
+    Το αποτέλεσμα κάθε σχεσιακής πράξης είναι σχέση.
+  \end{alertblock}
+\end{minipage}
+\end{frame}
+
+
+
+\input{../common/frame-employees-company.tex}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Ερωτήσεις και απαντήσεις 1--3}
+\begin{minipage}{0.94\textwidth}
+  \begin{enumerate}
+    \item Να βρεθεί το όνομα και το επώνυμο όλων των υπαλλήλων:
+          \[ \Pi_{firstname, lastname}(employees) \]
+    \item Να βρεθούν οι υπάλληλοι με μισθό μεγαλύτερο του 1500:
+          \[ \sigma_{salary>1500}(employees) \]
+    \item Να βρεθεί το όνομα και το επώνυμο όλων των υπαλλήλων που παίρνουν μισθό μεγαλύτερο από 1500:
+          \[ \Pi_{firstname, lastname} \left(\sigma_{salary>1500}(employees)\right) \]
+  \end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Ερωτήσεις και απαντήσεις 4--6}
+\begin{minipage}{0.94\textwidth}
+  \begin{enumerate} \setcounter{enumi}{3}
+    \item Να βρεθούν οι υπάλληλοι (κωδικός, επώνυμο, τμήμα)
+          που δεν εργάζονται στο τμήμα 2 και έχουν μισθό μικρότερο από 1200:
+          \[  \Pi_{empid, lastname, depid} \left(\sigma_{(depid\neq 2 \wedge salary < 1200)} (employees) \right) \]
+    \item Να βρεθεί το επώνυμο και ο μισθός του υπαλλήλου με κωδικό
+          109 μετά την αύξηση 5\% στο μισθό του:
+          \[ \Pi_{lastname, salary*1.05} \left(\sigma_{empid=109}(employees)\right) \]
+    \item Να βρεθούν οι κωδικοί των υπαλλήλων που δεν εργάζονται στα τμήματα 2, 3, 4:
+          \[ \Pi_{empid} \left(\sigma_{ \lnot (depid=2 \vee depid=3 \vee depid=4) } (employees) \right) \]
+  \end{enumerate}
+\end{minipage}
+\end{frame}
+
+

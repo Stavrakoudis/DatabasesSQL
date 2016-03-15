@@ -1,0 +1,117 @@
+
+\section[\textgreek{Κλειστότητα}]{\textgreek{Κλειστότητα και συμβατότητα τύπου}}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Σχεσιακή άλγεβρα}
+\begin{minipage}{\wE}
+  \large
+  \begin{itemize}{\itemsep9pt}
+    \item Η {\crr σχεσιακή άλγεβρα} είναι μια διαδικαστική ({\en procedural}) γλώσσα.
+    \item Διαθέτει ένα σύνολο τελεστών για σχεσιακές πράξεις.
+    \item Βασικές πράξεις: Προβολή, Επιλογή, Ένωση, Διαφορά, Καρτεσιανό Γινόμενο.
+    \item Παράγωγες πράξεις: Σύζευξη, Διαίρεση, Τομή.
+    \item Επιπλέον πράξεις: Συνάθροιση, Μετονομασία, Εισαγωγή, Διαγραφή, Ενημέρωση.
+  \end{itemize}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Κλειστότητα}
+\begin{minipage}{\wE}
+  \large
+  \begin{itemize}{\itemsep6pt}
+    \item Η {\crr σχεσιακή άλγεβρα} και ο σχεσιακός λογισμός παρέχουν
+          ένα σύνολο από τελεστές για πράξεις ανάμεσα σε σχέσεις.
+    \item Οι πράξεις με σχέσεις παράγουν νέες σχέσεις.
+    \item Το αποτέλεσμα της πράξης έχει καθορισμένο {\cbb βαθμό} και {\cbb πληθικότητα}.
+  \end{itemize}
+  \begin{block}{Κλειστότητα}
+    Tο αποτέλεσμα οποιασδήποτε σχεσιακής πράξης είναι {\crr σχέση}.
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Συμβατότητα τύπου}
+\begin{minipage}{\wE}
+\begin{block}{Ορισμός}
+Δύο σχέσεις $r$ και $s$, έχουν \textbf{συμβατότητα τύπου}, αν και μόνο αν:
+\begin{itemize}
+  \item Έχουν τον ίδιο βαθμό, δηλαδή έχουν το ίδιο πλήθος γνωρισμάτων.
+  \item Τα αντίστοιχα γνωρίσματα έχουν το ίδιο πεδίο ορισμού.
+\end{itemize}
+\end{block}
+\pause
+\begin{exampleblock}{Παράδειγμα}
+\begin{figure}[btp]
+  \centering
+  \en
+  \textbf{r} \vspace{0.5cm}
+    \begin{tabular}{ c c c } \toprule
+        {\bf A} & {\bf B} & {\bf C} \\ \midrule
+        1 & b & 10 \\
+        5 & a & 30 \\
+        3 & c & 20 \\   \bottomrule
+    \end{tabular} \phantom{nocnocnoc}
+      \textbf{s}  \vspace{0.5cm}
+    \begin{tabular}{ c c c } \toprule
+        {\bf A} & {\bf B} & {\bf C} \\ \midrule
+        5 & a & 20 \\
+        2 & b & 10 \\
+        3 & c & 20 \\  \bottomrule
+    \end{tabular}
+\end{figure}
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παραδείγματα μη συμβατότητας τύπου}
+\begin{minipage}{\wE}
+  \begin{exampleblock}{Παράδειγμα}
+      \en
+      \textbf{r} \vspace{0.5cm}
+      \begin{tabular}{ c c c } \toprule
+        {\bf A} & {\bf B} & {\bf C} \\ \midrule
+        1 & b & 10 \\
+        5 & a & 30 \\
+        3 & c & 20 \\   \hline
+      \end{tabular} \phantom{}
+      \textbf{s}  \vspace{0.5cm}
+      \begin{tabular}{ c c c } \toprule
+        {\bf A} & {\bf B} & {\bf C} \\ \midrule
+        5 & a & 20 \\
+        2 & b & 10 \\
+        3 & c & 20 \\   \hline
+      \end{tabular} \phantom{}
+      \textbf{t}
+      \begin{tabular}{ c c } \toprule
+        {\bf A} & {\bf B}  \\ \midrule
+        5 & b \\
+        2 & b \\
+        3 & c \\    \hline
+      \end{tabular} \phantom{}
+      \textbf{u}
+      \begin{tabular}{ c c c } \toprule
+        {\bf A} & {\bf B} & {\bf C} \\ \midrule
+        5 & b & a \\
+        2 & b & b \\
+        3 & c & b \\    \hline
+      \end{tabular}
+    \el
+
+  \end{exampleblock}
+    \begin{enumerate}
+      \item Οι σχέσεις $r$ και $t$ δεν έχουν συμβατότητα τύπου.
+      \item Οι σχέσεις $r$ και $u$ δεν έχουν συμβατότητα τύπου.
+      \item Οι σχέσεις $s$ και $t$ δεν έχουν συμβατότητα τύπου.
+      \item Οι σχέσεις $s$ και $u$ δεν έχουν συμβατότητα τύπου.
+      \item Οι σχέσεις $t$ και $u$ δεν έχουν συμβατότητα τύπου.
+    \end{enumerate}
+\end{minipage}
+\end{frame}
