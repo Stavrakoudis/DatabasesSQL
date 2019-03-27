@@ -1,0 +1,174 @@
+
+\usepackage{etex}
+%\usetheme{Darmstadt}
+\usetheme{Madrid}
+%\usecolortheme[named=NavyBlue]{structure}
+\usecolortheme{whale}
+
+%\usetheme{Frankfurt}  %\usecolortheme{default}
+
+%\useoutertheme{infolines}
+
+\mode<presentation>
+
+\setbeamersize{text margin left=5mm}
+\setbeamersize{text margin right=5mm}
+\setbeamertemplate{footline}[page number]{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\beamertemplatenavigationsymbolsempty
+    %\setbeamertemplate{footline}{%
+     % \raisebox{5pt}{\makebox[\paperwidth]{\hfill\makebox[10pt]{\scriptsize\insertframenumber}}}}
+      
+\addtobeamertemplate{block begin}{\setlength{\textwidth}{0.99\textwidth}}{}
+\addtobeamertemplate{block begin}{\setlength\abovedisplayskip{0pt}}
+%\addtobeamertemplate{block begin}{\vspace{-25pt}}{}
+
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[greek,english]{babel}
+\newcommand{\en}{\selectlanguage{english}}
+\newcommand{\el}{\selectlanguage{greek}}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[absolute,overlay]{textpos}
+
+\newcommand{\sq}{\selectlanguage{english}\color{red!70!blue}\bf}
+\newcommand{\bb}{\selectlanguage{greek}\color{blue!50!black}\bf}
+\newcommand{\ra}{\selectlanguage{english}\color{blue!90!red}\em\large}
+\newcommand{\enb}{\selectlanguage{english}\color{blue}}
+\newcommand{\ex}[1]{\begin{math}\partial{#1}\end{math}}
+
+\newcommand{\cgg}{\selectlanguage{english}\color{green!60!black}\bf}
+\newcommand{\cmm}{\selectlanguage{english}\color{red!50!blue}\bf}
+
+\newcommand{\cee}{\selectlanguage{greek}\color{red!90!blue}\bf\large}
+\newcommand{\bbl}{\color{blue!90!black}\bf}
+\newcommand{\crr}{\color{red!90!blue}\bf}
+\newcommand{\cbb}{\color{blue!90!black}\bf}
+
+\colorlet{colBC}{Apricot!50}
+
+%\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{chngcntr}
+%\usepackage{subfig}
+%\usepackage{subcaption}}
+\usepackage{pgf, tikz}
+\usepackage{pgfplots} %\pgfplotsset{compat=newest}
+\usepackage{pgfplotstable}
+\usepackage{comment}
+\usepackage[normalem]{ulem}
+
+\usepackage[tikz]{bclogo}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,automata,shapes,calc,positioning,fit}
+\usetikzlibrary{backgrounds,shadows,trees}
+
+
+\usetikzlibrary{calc}
+%\usepackage{booktabs}
+\usepackage{attachfile}
+
+\definecolor{blue10}{RGB}{135, 204, 255}
+\definecolor{blue90}{RGB}{0, 0, 204}
+
+
+\DefineVerbatimEnvironment{codeE}{Verbatim}
+{
+  frame            = leftline,
+  samepage         = true,
+  commandchars     = &\{\}, 
+  rulecolor=\color{black!50!white}, framerule=3px,
+  baselinestretch  = 1,
+  fontsize         = \small
+}
+
+\DefineVerbatimEnvironment{codeR}{Verbatim}
+{
+  frame            = leftline,
+  samepage         = true,
+  numbers          = left,
+  numbersep        = 6pt,
+  commandchars     = &\{\}, 
+  rulecolor=\color{red!90!black}, framerule=3px,
+  baselinestretch  = 1,
+  fontsize         = \small
+}
+
+\DefineVerbatimEnvironment{codeM}{Verbatim}
+{
+  frame=leftline,  framerule=2px,  rulecolor=\color{blue},
+  samepage=true, numbers=left,   numbersep=6pt,
+  commandchars=&\{\}, baselinestretch=1, fontsize=\small
+}
+
+\DefineVerbatimEnvironment{codeO}{Verbatim}
+{
+  frame=leftline,  framerule=2px,  rulecolor=\color{blue},
+  samepage=true, numbers=left,   numbersep=6pt,
+  commandchars=&\{\}, baselinestretch=1, fontsize=\small
+}
+
+\DefineVerbatimEnvironment{SQL}{Verbatim}
+{
+  frame=leftline,  framerule=2px,  rulecolor=\color{blue},
+  samepage=true, numbers=left,   numbersep=6pt,
+  commandchars=&\{\}, baselinestretch=1, fontsize=\small
+}
+
+\DefineVerbatimEnvironment{codeC}{Verbatim}
+{
+  frame=leftline,  framerule=2px,  rulecolor=\color{blue},
+  samepage=true, numbers=left,   numbersep=6pt,
+  commandchars=&\{\}, baselinestretch=1, fontsize=\small
+}
+
+
+\newcommand{\code}[1]{\en \textsl{#1}}{\el}
+\newcommand{\ojoinaux}{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\newcommand{\ojoin}{\mathbin{\ojoinaux\mkern-5.6mu\bowtie\mkern-5.7mu\ojoinaux}}
+\newcommand{\lojoin}{\mathbin{\ojoinaux\mkern-5.6mu\bowtie}}
+\newcommand{\rojoin}{\mathbin{\bowtie\mkern-5.7mu\ojoinaux}}
+
+\newcommand{\stirlingtwo}[2]{\genfrac{\lbrace}{\rbrace}{0pt}{}{#1}{#2}}
+
+\logo{\includegraphics[width=2.5cm,height=2.5cm,keepaspectratio]{../common/SQL2.jpg}}
+
+\AtBeginSection[]
+{ \el
+  \begin{frame}<beamer>
+    \frametitle{Περιεχόμενα}
+    \begin{minipage}{\wE}
+      \tableofcontents[currentsection]
+    \end{minipage} 
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Περιεχόμενα}
+    \begin{minipage}{\wE}
+      \tableofcontents[currentsubsection]
+    \end{minipage}   
+  \end{frame}
+}
+
+
+\newcommand{\wE}{0.88\textwidth}
+\newcommand{\wN}{0.92\textwidth}
+

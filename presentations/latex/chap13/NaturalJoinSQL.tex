@@ -1,0 +1,174 @@
+\section[]{\textgreek{Φυσική σύζευξη πινάκων στην \textlatin{SQL}}}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Φυσική σύζευξη στην {\en SQL}}
+\begin{minipage}{\wE}
+\begin{block}{Σύζευξη τμημάτων και υπαλλήλων}
+\[ departments \bowtie employees \]
+\vspace*{-0.5cm}
+\en
+\begin{SQL}
+  SELECT *
+    FROM departments NATURAL JOIN employees;
+\end{SQL}
+\end{block}
+\el
+\pause
+\begin{enumerate} \itemsep 6pt % [<+->] \pause 
+  \item Απαιτείται η ύπαρξη ενός τουλάχιστον κοινού πεδίου, εδώ το πεδίο {\sq depid}.
+  \item Μόνο οι εγγραφές όπου οι τιμές του κοινού πεδίου ταυτίζονται 
+        υπάρχουν στο αποτέλεσμα του ερωτήματος.
+  \item Το κοινό γνώρισμα υπάρχει μόνο μία φορά στο αποτέλεσμα.
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Αποτέλεσμα φυσικής σύζευξης}
+\begin{minipage}{\wE}
+\en
+\begin{SQL}
+  SELECT * 
+    FROM departments NATURAL JOIN employees;
+
+&scalebox{0.8}{depid  depname     manager  empid  firstname  lastname      salary   hiredate} 
+&scalebox{0.8}{-----------------------------------------------------------------------------}
+&scalebox{0.8}{&mgr{    1  Διοίκ./Επιβ.    109     109  Μαρία      Αθανασίου    2787.69 2000-01-26}}
+&scalebox{0.8}{&mgr{    1  Διοίκ./Επιβ.    109     502  Κρινιώ     Μαροπούλου   1754.67 2001-03-07}}
+&scalebox{0.8}{&mgr{    1  Διοίκ./Επιβ.    109     901  Κυριάκος   Ρούσσης      1852.99 2001-11-01}}
+&scalebox{0.8}{&mgr{    2  Οικον./Λογ.     153     153  Μαρία      Αλεβιζάτου   1321.92 2001-05-15}}
+&scalebox{0.8}{&mgr{    2  Οικον./Λογ.     153     243  Δέσποινα   Παπαδοπούλου 1609.52 1999-03-05}}
+&scalebox{0.8}{.............................................................................}
+&scalebox{0.8}{30 rows in set (0.00 sec)}    
+\end{SQL}
+\el
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Προβολή και φυσική σύζευξη στην {\en SQL}}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να βρεθεί ο κωδικός και το επώνυμο των υπαλλήλων, καθώς και το όνομα
+              του τμήματος στο οποίο απασχολούνται}
+\pause              
+  \[ \Pi_{empid, lastname, depname} (departments \bowtie employees) \]
+\pause
+\en
+\begin{SQL}
+  SELECT empid, lastname, depname
+    FROM departments NATURAL JOIN employees;
+\end{SQL}
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Φυσική σύζευξη τριών πινάκων στην {\en SQL}}
+\begin{minipage}{\wE}
+\begin{exampleblock}{\small Να βρεθεί το ονοματεπώνυμο των υπαλλήλων, 
+ο κωδικός και ο τίτλος του έργου που απασχολούνται}
+\pause
+\[
+\begin{split}
+  \Pi_{firstname, lastname, proid, title}     
+       ( employees \bowtie workson \bowtie projects )
+\end{split}
+\]
+\pause
+\en
+\begin{SQL}
+  SELECT firstname, lastname, proid, title
+    FROM employees NATURAL JOIN workson
+                   NATURAL JOIN projects;
+\end{SQL}
+\end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Φυσική σύζευξη ή καρτεσιανό γινόμενο?}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm}
+\begin{exampleblock}{$departments \bowtie projects = departments \times projects$}
+\vspace*{-0.5cm}
+\[
+\begin{split}
+  \Pi_{depid, proid}     
+       ( employees \bowtie projects )
+\end{split}
+\]
+\vspace*{-1cm}
+\en
+\begin{SQL}
+  SELECT depid, proid
+    FROM departments NATURAL JOIN  projects;
+\end{SQL}
+\end{exampleblock}
+\pause
+\begin{columns}[T]
+  \begin{column}{0.3\textwidth} \footnotesize
+    \begin{tabular}{ c c } \toprule
+     {\en\bf depid} & {\en\bf proid} \\ \midrule
+     1 &     5 \\
+     2 &     5 \\
+     6 &     5 \\
+     4 &     5 \\
+     5 &     5 \\
+     3 &     5 \\
+     1 &    12 \\
+     2 &    12 \\ 
+     ... & ... \\ \bottomrule
+    \end{tabular}    
+  \end{column}
+  \begin{column}{0.7\textwidth}
+    \begin{enumerate}
+      \item Το αποτέλεσμα είναι ίδιο με αυτό του φυσικού γινομένου {\crr (ειδική περίπτωση)}.
+      \item Αν δεν υπάρχει κοινό πεδίο στους πίνακες της φυσικής σύζευξης
+            τότε φυσική σύζευξη και καρτεσιανό γινόμενο θα δώσουν 
+            το ίδιο αποτέλεσμα.
+    \end{enumerate}
+  \end{column}  
+\end{columns}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Περιορισμός εγγραφών στη φυσική σύζευξη}
+\begin{minipage}{\wE}
+\vspace*{-0.5cm} 
+\begin{exampleblock}{\small Να βρεθεί ο κωδικός και το επώνυμο των υπαλλήλων που απασχολούνται στο έργο με κωδικό 5}           
+  \[ \Pi_{empid, lastname} \left( \sigma_{proid=5} (employees \bowtie workson) \right) \]
+\vspace*{-0.5cm}  
+\pause
+\en
+\begin{SQL}
+  SELECT empid, lastname 
+    FROM employees NATURAL JOIN workson
+   WHERE proid = 5;
+\end{SQL}
+\end{exampleblock}
+\pause
+\begin{alertblock}{\small Να βρεθεί ο κωδικός και το επώνυμο των υπαλλήλων που απασχολούνται στο έργο με κωδικό 5}           
+  \[ \Pi_{empid, lastname} \left( \sigma_{proid=5} (employees) \right) \]
+\vspace*{-0.5cm}  
+\en
+\begin{SQL}
+  SELECT empid, lastname 
+    FROM employees
+   WHERE proid = 5;
+\end{SQL}
+\end{alertblock}
+\end{minipage}
+\end{frame}
+
+

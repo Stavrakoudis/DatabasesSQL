@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+  \tikzstyle{every state} = [fill, draw=black, blue50, text=black]
+  \tikzstyle{every state} = [inner sep=0.5pt, minimum size=0pt, scale=0.9]
+   
+  \def\A{0.0};
+  \def\B{3.0};
+
+  \draw (\A, 0) ellipse (22pt and 36pt); % A
+  \draw (\B, 0) ellipse (22pt and 36pt); % B
+
+  % A nodes
+  \node[state] (a1) at (\A,  20pt) {$a$};
+  \node[state] (a2) at (\A,   0pt) {$b$};
+  \node[state] (a3) at (\A, -20pt) {$c$};
+
+  % B nodes
+  \node[state] (b1) at (\B,  16pt) {$1$};
+  \node[state] (b2) at (\B, -16pt) {$2$};
+
+  % connection lines
+  \path[-] (a1) edge  (b1);
+  \path[-] (a2) edge  (b1);
+  \path[-] (a3) edge  (b1);
+  \path[-] (a1) edge  (b2);
+  \path[-] (a2) edge  (b2);
+  \path[-] (a3) edge  (b2);
+  
+
+  % annotate names
+  \draw (\A, 45pt) node {\large$\mathbf{A}$};
+  \draw (\B, 45pt) node {\large$\mathbf{B}$};
+
+\end{tikzpicture}

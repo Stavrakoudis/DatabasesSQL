@@ -1,0 +1,454 @@
+
+\begin{frame}[shrink]
+\frametitle{Η σχεσιακή πράξη της σύζευξης}
+Η σύζευξη μοιάζει με το γινόμενο, ωστόσο έχει μια σημαντική διαφορά:
+
+Οι πλειάδες του αποτελέσματος
+δεν είναι όλοι οι πιθανοί συνδυασμοί, αλλά μόνο οι συνδυασμοί που ικανοποιούν κάποια συνθήκη.
+
+Υπάρχουν διάφορες παραλλαγές συζεύξεων, με σημαντικότερη και περισσότερο διαδεδομένη τη
+ φυσική σύζευξη, η οποία στηρίζεται στην παρουσία γνωρισμάτων
+με κοινές τιμές στις δύο σχέσεις.
+\end{frame}
+
+\begin{frame}[shrink]
+\frametitle{Ορισμός της σύζευξης}
+\begin{block}{Ορισμός}
+Αν η $r$ είναι σχέση με σχήμα $R=\{X,Y\}$ και $s$ είναι σχέση με σχήμα $S=\{Y,Z\}$, τότε η φυσική
+σύζευξη των $R$ και $S$ είναι μια σχέση με σχήμα $\{X,Y,Z\}$ και κορμό το σύνολο των συνδυασμών των
+πλειάδων της $r$ και $s$ για τις οποίες οι τιμές στο κοινό γνώρισμα $Y$ ταυτίζονται.
+
+Δηλαδή, μια πλειάδα της $r$, θα συνδυαστεί με μια πλειάδα της $s$,
+αν και μόνο αν, οι τιμές στο κοινό γνώρισμα $Y$ ταυτίζονται μεταξύ τους.
+
+Η φυσική σύζευξη των σχέσεων $r$ και $s$ συμβολίζεται με $s \bowtie s$,
+ή $r \quad NATURAL \quad JOIN \quad s$, ή απλά $r \quad JOIN \quad s$.
+\end{block}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ιδιότητες της σύζευξης}
+\begin{block}{Αντιμεταθετική ιδιότητα}
+\[
+  r \bowtie s \neq s \bowtie r
+\]
+\[ \Pi_L (r \bowtie s) = \Pi_L (s \bowtie r) \]
+\end{block}
+\begin{block}{Προσεταιριστική ιδιότητα}
+\[
+r \bowtie (s \bowtie t) = (r \bowtie s) \bowtie  t
+\]
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Φυσική σύζευξη με {\sq SQL}}
+\begin{block}{Παράδειγμα σύζευξης} \en
+\begin{lstlisting}
+  SELECT *
+    FROM departments NATURAL JOIN employees
+\end{lstlisting}
+\el
+Η φυσική σύζευξη στην {\sq SQL} γίνεται είτε με τη φράση {\sq NATURAL JOIN}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Παράδειγμα φυσικής σύζευξης}
+
+{\bb \en departments}:
+\begin{tabular}{|c l|} \hline
+{\en depid} & {\en depname} \\ \hline
+1 & Μελετών \\
+2 & Λογιστήριο \\
+3 & Διαφήμισης \\ \hline
+\end{tabular}
+
+{\bb \en employees}:
+\begin{tabular}{|c l c|} \hline
+{\en empid} & {\en empname} & {\en depid} \\ \hline
+102 & Αποστολάκης & 2 \\
+154 & Βασιλάκης   & 1 \\
+132 & Χρηστάκης   & 2\\
+432 & Δημητράκης  & 3 \\
+203 & Κωστάκης    & 1 \\ \hline
+\end{tabular}
+
+{\bb \en departments $\bowtie$ employees}: \\
+\begin{tabular}{|c l c l|} \hline
+{\en depid} & {\en depname} & {\en empid} & {\en empname} \\ \hline
+1 & Μελετών & 154 & Βασιλάκης  \\
+1 & Μελετών & 203 & Κωστάκης   \\
+2 & Λογιστήριο & 102 & Αποστολάκης \\
+2 & Λογιστήριο & 132 & Χρηστάκης \\
+3 & Διαφήμισης & 432 & Δημητράκης \\ \hline
+\end{tabular}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Η σχεσιακή πράξη της σύζευξης θ}
+\begin{block}{Ορισμός}
+Αν η $r$ είναι σχέση με σχήμα $R=\{A_1, A_2, \ldots, A_n\}$,
+
+$s$ είναι σχέση
+με σχήμα $S=\{B_1, B_2, \ldots, B_m\}$,
+
+τα γνωρίσματα $A_i$ και $B_j$ έχουν το ίδιο πεδίο ορισμού,
+
+και $\theta$ είναι τελεστής σύγκρισης, $\theta \in \{=,\neq,<,\leq,>,\geq\}$,
+
+τότε η $\theta$ σύζευξη των $R$ και $S$, $R\bowtie_{A_i \theta B_j}S$, είναι μια σχέση με σχήμα
+το σύνολο των γνωρισμάτων των $R$ και $S$, $\{A_1, A_2, \ldots, A_n\, B_1, B_2, \ldots, B_m\}$
+
+και κορμό το σύνολο των πλειάδων από κάθε συνδυασμό των πλειάδων των $R$ και $S$,
+που ικανοποιούν τη συνθήκη $A_i \theta B_j$.
+\end{block}
+Ικανοποιούν τη συνθήκη:{\sq TRUE} όχι {\sq FALSE} ή {\sq NULL}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Παρατηρήσεις για τη θ σύζευξη}
+\begin{itemize}
+  \item Το αποτέλεσμα είναι μια σχέση με βαθμό $m+n$,
+        και πληθικότητα ανάμεσα στο 0 και στο $n_R \cdot n_S$
+  \item Αν κάποια πλειάδα έχει στο γνώρισμα ($A_i$ ή $B_j$ ) που συμμετέχει
+στη σύζευξη {\sq NULL} τιμή, τότε δεν συμμετέχει στο αποτέλεσμα.
+Με αυτή την έννοια το αποτέλεσμα της σύζευξης,
+ενδεχομένως, περιέχει λιγότερη πληροφορία, από ότι οι επιμέρους σχέσεις.
+  \item Αν ο τελεστής $\theta$ είναι το $=$ τότε η σύζευξη καλείται ισοσύζευξη,
+        και πρακτικά είναι φυσική σύζευξη.
+  \item Η σύζευξη $\theta$ ($\theta JOIN$) είναι γενίκευση της σύζευξης,
+       και στη ουσία πρόκειται για συνδυασμό των πράξεων γινομένου και επιλογής,
+       έτσι μπορεί να γραφεί: \\
+       \[ (r \times s) \quad WHERE \quad X \quad \theta \quad Y \]
+       όπου ο τελεστής $\theta$ δεν είναι κατά ανάγκη ισότητα.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{θ σύζευξη με {\sq SQL}}
+\begin{block}{Παράδειγμα σύζευξης} \en
+\begin{lstlisting}
+  SELECT *
+    FROM deprtments, employees
+   WHERE departments.code = employees.depid
+\end{lstlisting}
+\el
+Η σύζευξη θ στην {\sq SQL} γίνεται είτε με τη φράση {\sq WHERE}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Παράδειγμα  σύζευξης θ }
+
+{\bb \en departments}:
+\begin{tabular}{|c l|} \hline
+{\en depcode} & {\en depname} \\ \hline
+1 & Μελετών \\
+2 & Λογιστήριο \\
+3 & Διαφήμισης \\ \hline
+\end{tabular}
+
+{\bb \en employees}:
+\begin{tabular}{|c l c|} \hline
+{\en empid} & {\en empname} & {\en depid} \\ \hline
+102 & Αποστολάκης & 2 \\
+154 & Βασιλάκης   & 1 \\
+132 & Χρηστάκης   & 2\\
+432 & Δημητράκης  & 3 \\
+203 & Κωστάκης    & 1 \\ \hline
+\end{tabular}
+
+{\bb \en departments $\times$ employees WHERE depcode=depid}: \\
+\begin{tabular}{|c l c l c|} \hline
+{\en depcode} & {\en depname} & {\en empid} & {\en empname} & {\en depid} \\ \hline
+1 & Μελετών & 154 & Βασιλάκης  & 1\\
+1 & Μελετών & 203 & Κωστάκης   & 1\\
+2 & Λογιστήριο & 102 & Αποστολάκης & 2\\
+2 & Λογιστήριο & 132 & Χρηστάκης  & 2\\
+3 & Διαφήμισης & 432 & Δημητράκης & 3\\ \hline
+\end{tabular}
+
+\end{frame}
+
+
+
+\begin{frame}[shrink]
+\frametitle{Ορισμός εξωτερική σύζευξης}
+\begin{block}{}
+Αν η $r$ είναι σχέση με σχήμα
+$R= \{ A_1, A_2, \ldots, A_n, B_1, B_2, \ldots, B_k \} $,
+
+$s$ είναι σχέση
+με σχήμα $S=\{B_1, B_2, \ldots, B_k, C_1, C_2, \ldots, C_m\}$,
+
+τότε η εξωτερική σύζευξη
+$t = r \ojoin s$ έχει σχήμα $T=\{A_1, A_2, \ldots, A_n, B_1, B_2, \ldots, B_k, C_1, C_2, \ldots, C_m\}$ και κορμό που
+αποτελείται από :
+\begin{enumerate}
+  \item τις πλειάδες της εσωτερικής σύζευξης  των $r \bowtie s$
+  \item τις πλειάδες της σχέσης $r$ που δεν έχουν ταιριαστές τιμές στην $s$,
+        με τιμές {\en NULL} στα αντίστοιχα γνωρίσματα της $s$
+  \item τις πλειάδες της σχέσης $s$ που δεν έχουν ταιριαστές τιμές στην $r$,
+        με τιμές {\en NULL} στα αντίστοιχα γνωρίσματα της $r$
+\end{enumerate}
+\end{block}
+
+
+
+\begin{frame}[shrink]
+\frametitle{Εξωτερική σύζευξη}
+Η εξωτερική σύζευξη είναι επέκταση της σύζευξης, στην περίπτωση που υπάρχουν πλειάδες σε μία
+ή περισσότερες σχέσεις, χωρίς ταιριαστές τιμές.
+
+Για παράδειγμα θεωρείστε τις δύο σχέσεις του σχήματος,
+που παριστάνουν ένα δείγμα από τα υποκαταστήματα (Υ) και τους πελάτες (Π)
+μιας εταιρείας.
+
+Θέλουμε να βρούμε το αποτέλεσμα της εξωτερικής σύζευξης
+των δύο σχέσεων με βάση την πόλη:
+\[
+    \text{Υποκαταστήματα} \quad \ojoin \quad \text{Πελάτες}
+\]
+\end{frame}
+
+
+
+
+
+\begin{frame}[shrink]
+\frametitle{Παράδειγμα εξωτερική σύζευξης}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+{\bb Υποκαταστήματα}\\
+\begin{tabular}{|c|c|} \hline
+          {Κωδικός} & {Πόλη} \\ \hline  
+          1 & Αθήνα \\
+          2 & Πάτρα \\
+          3 & Θεσσαλονίκη \\ \hline
+\end{tabular}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+{\bb Πελάτες}\\
+\begin{tabular}{|c|c|} \hline
+          { Όνομα} & {Πόλη} \\ \hline  
+          Νίκος & Πάτρα \\
+          Βάσω  & Κοζάνη \\
+          Αγγελική & Πάτρα \\
+          Βασίλης & Αθήνα \\ \hline
+\end{tabular}
+\end{column}
+\end{columns}
+
+ \bigskip
+ {\bb Υποκαταστήματα $\ojoin$ Πελάτες} \\
+ \begin{tabular}{|c|c|c|} \hline
+       {Κωδικός} & {Πόλη} & {Όνομα}  \\ \hline  
+       1 & Αθήνα & Βασίλης  \\
+       2 & Πάτρα & Νίκος  \\
+       2 & Πάτρα & Αγγελική \\
+       3 & Θεσσαλονίκη & {\en NULL}   \\
+        {\en NULL} & {\en NULL} & Βάσω  \\ \hline
+ \end{tabular}
+\end{frame}
+
+
+
+\begin{frame}[shrink]
+\frametitle{Παράδειγμα δεξιάς εξωτερική σύζευξης}
+ 
+\begin{columns}
+\begin{column}{0.5\textwidth}
+{\bb Υποκαταστήματα}\\
+\begin{tabular}{|c|c|} \hline
+          {Κωδικός} & {Πόλη} \\ \hline \hline
+          1 & Αθήνα \\
+          2 & Πάτρα \\
+          3 & Θεσσαλονίκη \\ \hline
+\end{tabular}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+{\bb Πελάτες}\\
+\begin{tabular}{|c|c|} \hline
+          { Όνομα} & {Πόλη} \\ \hline \hline
+          Νίκος & Πάτρα \\
+          Βάσω  & Κοζάνη \\
+          Αγγελική & Πάτρα \\
+          Βασίλης & Αθήνα \\ \hline
+\end{tabular}
+\end{column}
+\end{columns}
+
+\bigskip
+{\bb Υποκαταστήματα $\rojoin$ Πελάτες} \\
+  \begin{tabular}{|c|c|c|} \hline
+        {Κωδικός} & {Πόλη} & {Όνομα}  \\ \hline 
+        1 & Αθήνα & Βασίλης  \\
+        2 & Πάτρα & Νίκος  \\
+        2 & Πάτρα & Αγγελική \\
+        {\en NULL} &  Βάσω & Κοζάνη   \\ \hline
+  \end{tabular}
+\end{frame}
+
+
+\begin{frame}[shrink]
+\frametitle{Παράδειγμα αριστερής εξωτερική σύζευξης}
+ 
+\begin{columns}
+\begin{column}{0.5\textwidth}
+{\bb Υποκαταστήματα}\\
+\begin{tabular}{|c|c|} \hline
+          {Κωδικός} & {Πόλη} \\ \hline 
+          1 & Αθήνα \\
+          2 & Πάτρα \\
+          3 & Θεσσαλονίκη \\ \hline
+\end{tabular}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+{\bb Πελάτες}\\
+\begin{tabular}{|c|c|} \hline
+          { Όνομα} & {Πόλη} \\ \hline 
+          Νίκος & Πάτρα \\
+          Βάσω  & Κοζάνη \\
+          Αγγελική & Πάτρα \\
+          Βασίλης & Αθήνα \\ \hline
+\end{tabular}
+\end{column}
+
+\end{columns}
+
+ \bigskip
+ { Υποκαταστήματα $\lojoin$ Πελάτες} \\
+ \begin{tabular}{|c|c|c|} \hline
+       {Κωδικός} & {Πόλη} & {Όνομα}  \\ \hline  
+      1 & Αθήνα & Βασίλης  \\  
+      2 & Πάτρα & Νίκος   \\  
+      2 & Πάτρα & Αγγελική  \\  
+      3 & Θεσσαλονίκη & {\en NULL}     \\ \hline
+ \end{tabular}
+\end{frame}
+
+
+
+% part III
+
+
+
+
+\begin{frame}[shrink]
+\frametitle{Η σχεσιακή πράξη της διαίρεσης}
+
+Αν η $r$ είναι σχέση με σχήμα $R=\{X,Y\}$ και $s$ είναι μια σχέση
+με σχήμα $S=\{Y\}$, δηλαδή $S \subseteq R$, τότε,
+το αποτέλεσμα της διαίρεσης $t = r \div s$, 
+είναι μια  σχέση $t$ με σχήμα $\{X\}$. 
+Δηλαδή, η $t$ είναι μια σχέση με σχήμα τη διαφορά
+$R-S=\{X\}$, δηλαδή εκείνα τα γνωρίσματα της $r$ που δεν ανήκουν στην $s$.
+
+Ο κορμός της $t$ αποτελείται από εκείνες τις πλειάδες
+της σχέσης $r$ για οποίες τα (κοινά) γνωρίσματα $\{X\}$ των σχέσεων $r$ και $s$ 
+έχουν τιμές που ταυτίζονται. 
+Μια πλειάδα $t$, με γνωρίσματα $R-S=\{X\}$, ανήκει στο αποτέλεσμα όταν:
+
+\begin{enumerate}
+  \item $t \in \Pi_{R-S}(r)$ 
+  \item  $ \forall \; t_s \in s, \quad   \exists \; t_r \in r$ έτσι ώστε:
+  \begin{itemize}
+    \item $t_r[S] = t_s[S]$
+    \item $t_r[R-S] = t$ 	
+  \end{itemize}
+\end{enumerate}
+
+\end{frame}
+
+
+
+\begin{frame}[shrink]
+\frametitle{Διαίρεση, διαφορά και καρτεσιανό γινόμενο}
+\begin{block}{Η διαίρεση είναι παράγωγη πράξη}
+\[
+ r \div s = \Pi_{R-S}(r) - \Pi_{R-S}\left( (\Pi_{R-S}(r) \times s  ) - \Pi_{R-S,S}(r) \right)
+\]
+\end{block}
+
+\begin{block}{Η διαίρεση είναι το αντίστροφο του γινομένου στην άλγεβρα των αριθμών, και το ίδιο μπορεί
+να ειπωθεί για τη σχεσιακή άλγεβρα}
+Έτσι, αν $t = r \div s$, τότε η σχέση $t \times s$, έχει
+συμβατότητα τύπου με την $r$
+\end{block}
+
+\end{frame}
+
+
+
+\begin{frame}[shrink]
+\frametitle{Παράδειγμα διαίρεσης}
+
+\begin{columns}
+
+\begin{column}{0.4\textwidth} Αθλούνται
+  \begin{tabular}{ l l }           \hline
+  \emph{Όνομα} & \emph{Άθλημα} \\  \hline
+  Νίκος & Ποδόσφαιρο \\ 
+  Ανδρέας & Κολύμπι \\ 
+  Βασίλης & Στίβος \\ 
+  Ανδρέας & Ποδόσφαιρο \\ 
+  Χρήστος & Κολύμπι  \\
+  Βασίλης & Ποδόσφαιρο \\
+  Νίκος   & Στίβος  \\
+  Γιώργος & Ποδόσφαιρο \\
+  Χρήστος & Στίβος     \\           \hline
+  \end{tabular}
+\end{column}
+\hspace{1cm}
+
+\begin{column}{0.3\textwidth} Πρωτάθλημα
+  \begin{tabular}{ c } \hline
+  \emph{Άθλημα }\\ \hline  
+  Ποδόσφαιρο \\
+  Στίβος \\ \hline \\ \\ \\
+  \end{tabular}
+\end{column}
+
+\begin{column}{0.3\textwidth} Συμμετοχή
+  \begin{tabular}{ c } \hline
+  \emph{Όνομα} \\ \hline 
+  Νίκος \\
+  Βασίλης \\    \hline   
+  \end{tabular}
+\end{column}
+\end{columns}
+
+\[ \text{Συμμετοχή} = \text{Αθλούνται} \div \text{Πρωτάθλημα} \]
+
+\begin{itemize}%{$\hookrightarrow$}
+\item 
+Διαιρετέος είναι η σχέση Αθλούνται (α) και διαιρέτης η σχέση \emph{Πρωτάθλημα} (π).
+          Το αποτέλεσμα είναι η σχέση Συμμετοχή (σ)
+\item 
+Το αποτέλεσμα έχει σχήμα τη διαφορά: $\Sigma=A-\Pi$.
+          Η σχέση Συμμετοχή έχει εκείνα τα γνωρίσματα της σχέσης \emph{Αθλούνται}, που
+          δεν υπάρχουν στη σχέση \emph{Πρωτάθλημα}
+\item 
+Για το κορμό της σχέσης {\em Συμμετοχή}, πρέπει να βρεθούν εκείνες οι πλειάδες της 
+σχέσης {\em Αθλούνται}, για τις οποίες το {\em Άθλημα}
+υπάρχει στις πλειάδες που αντιστοιχούν σε όλες τις πλειάδες της σχέση {\em Πρωτάθλημα}.
+Δηλαδή, θα ληφθούν τα ονόματα των μαθητών που αθλούνται σε όλα τα αθλήματα
+τα οποία υπάρχουν στη λίστα αθλημάτων για το πρωτάθλημα.
+\end{itemize}
+\end{frame}
+

@@ -1,0 +1,196 @@
+
+\section[{\en sumFunc}]{\textgreek{Ομαδοποίηση και συνάθροιση}}
+
+\subsection[{\en sumFunc}]{\textgreek{Συναρτήσεις ομαδοποίησης και συνάθροισης}}
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Γενική μορφή συνάθροισης}
+Η σύνοψη (ή αλλιώς ομαδοποίηση) ομαδοποιεί πλειάδες μιας σχέσης με βάση κοινές τιμές σε ένα ή περισσότερα γνωρίσματα.
+Σε κάθε ένα από τα υποσύνολα των πλειάδων που προκύπτουν μπορεί να εφαρμοστεί μια συναθροιστική συνάρτηση.
+\begin{minipage}{\wE}
+
+  \begin{block}{Συνάθροιση:}
+    Αν $R$ είναι μια σχεσιακή παράσταση και $X \subset R$ και $A \subset R$ τότε η παράσταση:
+      \en
+      \[ {}_{X} \calg_{F(A)} (R) \]
+      \el
+    δηλώνει την ομαδοποίηση ως προς $X$ των πλειάδων της $r(R)$ και την εφαρμογή της συνάρτησης $F$ πάνω στα γνωρίσματα $A$. \\
+    Η συνάθροιση δηλώνεται με το καλλιγραφικό {\en G}, $\calg$. \\
+    Η χρήση της ομαδοποίησης ($X$) είναι προαιρετική.
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Συναρτήσεις συνάθροισης}
+\begin{minipage}{\wE}
+  \begin{block}{5 κύριες συναρτήσεις συνάθροισης:}
+    \begin{itemize} \itemsep9pt
+      \item \tcount, πλήθος εγγραφών
+      \item \tsum,  άθροισμα αριθμητικού γνωρίσματος,
+      \item \tavg,  μέση τιμή αριθμητικού γνωρίσματος,
+      \item \tmin,  μικρότερη τιμή.
+      \item \tmax,  μεγαλύτερη τιμή.
+    \end{itemize}
+  \end{block}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα άθροισης τιμών γνωρίσματος}
+\begin{minipage}{\wE}
+  Έστω η σχέση {\en\em sales}:
+    \begin{tabular}{ l l r } \toprule
+        {\en\bf area} & {\en\bf employee} & {\en\bf amount} \\   \midrule
+        Ημαθίας  & Ευθυμίου & 1890 \\
+        Μαγνησίας & Αλεξανρίδης & 2400 \\
+        Καβάλας   & Αλεξανρίδης & 780 \\
+        Μαγνησίας & Ευθυμίου & 2100 \\
+        Τρικάλων  & Πετρίδης & 4400 \\
+        Πιερίας   & Πετρίδης & 1820 \\
+        Καβάλας   & Ευθυμίου & 2400 \\        \bottomrule
+    \end{tabular}
+  \begin{exampleblock}{Να υπολογιστεί το άθροισμα των πωλήσεων}
+    \[ \calg_{\mathbf{sum}(amount)} (sales) \]
+  \end{exampleblock}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Ανατομία συνάθροισης με ομαδοποίηση}
+\begin{minipage}{\wE}
+  { \Large \[ {}_{employee}\calg_{\mathbf{sum}(amount)} (sales) \] }
+  \begin{enumerate}
+    \item Λαμβάνεται ο κορμός της σχέσης {\en\em sales}, δηλαδή όλες οι πλειάδες.
+    \item Ομαδοποίηση ως προς τις τιμές του γνωρίσματος {\en\em employee}.
+          εδώ, σε 3 υποσύνολα.
+    \item Ο δείκτης {\en\em {sum}(amount)} δεξιά από το $\calg$ (καλλιγραφικό {\en G}),
+          σημαίνει πως  θα υπολογιστεί το άθροισμα των τιμών {\en\em amount}
+          για κάθε διακριτή τιμή {\en\em employee}.
+    \item Το αποτέλεσμα της σχεσιακής παράστασης έχει σχήμα το \{{\en\em employee, sum(amount)}\}.
+  \end{enumerate}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παράδειγμα άθροισης με ομαδοποίηση}
+\begin{minipage}{\wE}
+\begin{columns}[T]
+  \begin{column}{0.5\textwidth}
+  \begin{exampleblock}{Άθροισμα πωλήσεων ανά υπάλληλο}
+    \[ {}_{employee}\calg_{\mathbf{sum}(amount)} (sales) \]
+        \begin{tabular}{ l r } \toprule
+         {\en employee} & {\en sum(amount)} \\  \midrule
+         Ευθυμίου & 6390 \\
+         Αλεξανρίδης & 3180 \\
+         Πετρίδης & 6220 \\     \bottomrule
+    \end{tabular}
+  \end{exampleblock}    
+  \end{column}
+  \begin{column}{0.5\textwidth}  \small
+    \begin{tabular}{ l l r } \toprule
+        {\en\bf area} & {\en\bf employee} & {\en\bf amount} \\   \midrule
+        \rowcolor{blue!30!white} Ημαθίας  & Ευθυμίου & 1890 \\
+        \rowcolor{green!30!white} Μαγνησίας & Αλεξανρίδης & 2400 \\
+        \rowcolor{green!30!white} Καβάλας   & Αλεξανρίδης & 780 \\
+        \rowcolor{blue!30!white} Μαγνησίας & Ευθυμίου & 2100 \\
+        \rowcolor{red!30!white} Τρικάλων  & Πετρίδης & 4400 \\
+        \rowcolor{red!30!white} Πιερίας   & Πετρίδης & 1820 \\
+        \rowcolor{blue!30!white} Καβάλας   & Ευθυμίου & 2400 \\        \bottomrule
+    \end{tabular}
+  \end{column}
+\end{columns}
+\end{minipage}
+\end{frame}
+
+
+
+\subsection[{\en groupby}]{\textgreek{Επιπλέον παραδείγματα σύνοψης και συνάθροισης}}
+
+\input{../common/frame-employees-company.tex}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παραδείγματα συναρτήσεων συνάθροισης}
+\begin{minipage}{\wE}
+  \begin{exampleblock}{Το άθροισμα των μισθών όλων των υπαλλήλων}
+    \[ \mathcal{G}_{sum(salary)} (employees) \]
+  \end{exampleblock}
+    \begin{exampleblock}{Ο μέσος μισθός των υπαλλήλων του τμήματος 3}
+    \[ \mathcal{G}_{avg(salary)} ( \sigma_{depid=3} (employees) ) \]
+  \end{exampleblock}
+  \begin{exampleblock}{Πόσοι υπάλληλοι εργάζονται στο τμήμα 4}
+    \[ \mathcal{G}_{count(empid)} ( \sigma_{depid=4} (employees) ) \]
+  \end{exampleblock}
+  \begin{exampleblock}{Ημερομηνία της πιο πρόσφατης πρόσληψης}
+    \[ \mathcal{G}_{max(hiredate)} (employees) \]
+  \end{exampleblock}    
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Παραδείγματα συνάθροισης με ομαδοποίηση}
+\begin{minipage}{\wE}
+  \begin{exampleblock}{Ο μικρότερος μισθός ανά τμήμα υπαλλήλων}
+    \[ {}_{depid} \mathcal{G}_{min(salary)} (employees) \]
+  \end{exampleblock}
+  \begin{exampleblock}{Να βρεθεί το εύρος μισθού ανά τμήμα}
+    \[ {}_{depid} \mathcal{G}_{max(salary)-min(salary)}  (employees) \]
+  \end{exampleblock}
+  \begin{exampleblock}{Πλήθος υπαλλήλων ανά τμήμα με μισθό $>1300$}
+    \[ {}_{depid} \mathcal{G}_{count(depid)}
+       \left(
+         \sigma_{salary>1300} (employees)
+       \right) 
+    \]
+  \end{exampleblock}    
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[t, fragile, shrink]
+\frametitle{Περιορισμός μετά από ομαδοποίηση}
+\begin{minipage}{\wE}
+  \begin{exampleblock}{Τμήματα με περισσότερους από 4 υπαλλήλους}
+    \[  
+      \sigma _{count(depid) >4} 
+      \left(
+        {}_{depid}  \calg_{count(empid)}  (employees)  
+      \right)
+   \]
+  \end{exampleblock}
+  \begin{columns}[T]
+    \begin{column}{0.4\textwidth}
+      \begin{tabular} { c c }
+        \begin{tabular}{r r} \toprule
+          {\en\bf depid} & {\en \bf count(empid)} \\ \midrule
+          1    &     3 \\
+          2    &     4 \\
+          \rowcolor{blue!30!white}
+          3    &     9 \\
+          \rowcolor{blue!30!white}
+          4    &     5 \\
+          \rowcolor{blue!00!white}
+          5    &     2 \\
+          \rowcolor{blue!30!white}
+          6    &     7 \\ \bottomrule
+\end{tabular} 
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      Μόνο οι σκιασμένες γραμμές στο αποτέλεσμα, δηλαδή μόνο εκείνες για τις οποίες 
+      η σύγκριση 
+      \[ count(depid) > 4 \]
+      αποδίδει την τιμή {\sq \ttrue}.
+    \end{column}
+  \end{columns} 
+\end{minipage}
+\end{frame}
+
+
